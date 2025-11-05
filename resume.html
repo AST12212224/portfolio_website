@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - Aadesh Tikhe</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .resume-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 4rem;
+        }
+
+        .resume-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .resume-name {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .resume-contact {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .resume-contact a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .resume-section {
+            margin-bottom: 3rem;
+        }
+
+        .resume-section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .resume-item {
+            margin-bottom: 2rem;
+        }
+
+        .resume-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .resume-item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .resume-item-date {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .resume-item-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .resume-item-desc {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+        }
+
+        .resume-item-desc ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .resume-item-desc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-category-resume {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .skill-category-resume h4 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .skill-category-resume p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .download-btn {
+            padding: 1.2rem 2.5rem;
+            background: var(--accent);
+            border: 1px solid var(--accent);
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: transparent;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .resume-container {
+                padding: 2rem;
+            }
+
+            .resume-name {
+                font-size: 2rem;
+            }
+
+            .resume-contact {
+                gap: 1rem;
+            }
+
+            .resume-item-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dot-matrix"></div>
+    <div class="scroll-progress"></div>
+
+    <nav>
+        <div class="logo">AADESH TIKHE</div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="lore.html">Lore</a></li>
+            <li><a href="certifications.html">Certifications</a></li>
+            <li><a href="content.html">Content</a></li>
+            <li><a href="resume.html" class="active">Resume</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-title">
+        <h1>Resume</h1>
+        <p>Comprehensive overview of my experience and qualifications</p>
+    </div>
+
+    <section>
+        <div class="resume-container">
+            <div class="resume-header">
+                <h1 class="resume-name">AADESH TIKHE</h1>
+                <div class="resume-contact">
+                    <span>📍 Chhatrapati Sambhajinagar, India</span>
+                    <span>📧 <a href="mailto:aadeshtikhe24@gmail.com">aadeshtikhe24@gmail.com</a></span>
+                    <span>📱 <a href="tel:+919130511165">+91 9130511165</a></span>
+                </div>
+                <div class="resume-contact" style="margin-top: 0.5rem;">
+                    <span><a href="https://github.com/AST12212224" target="_blank">GitHub</a></span>
+                    <span><a href="https://linkedin.com/in/aadesh-tikhe" target="_blank">LinkedIn</a></span>
+                    <span><a href="https://linktr.ee/ast246" target="_blank">Linktree</a></span>
+                    <span><a href="https://aadesh24.com" target="_blank">aadesh24.com</a></span>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h2 class="resume-section-title">About</h2>
+                <p class="resume-item-desc">
+                    I'm obsessively curious. I can't see a mathematical pattern without wanting to pull it apart and see if it connects to something else. My work is a mix of rigorous research (published on OEIS, presented at conferences) and experimental coding projects. I'm not just interested in solving known problems—I want to find the problems no one's asking yet.
+                    <br><br>
+                    <strong>Goal:</strong> Advance interpretability in deep learning by applying insights from number theory and algorithmic analysis to neural network behavior. I aspire to build ethical, human-centered systems that simplify complexity and deepen understanding.
+                </p>
+            </div>
+
+            <div class="resume-section">
+                <h2 class="resume-section-title">Education</h2>
+                <div class="resume-item">
+                    <div class="resume-item-header">
+                        <div class="resume-item-title">Bachelor of Computer Applications (BCA)</div>
+                        <div class="resume-item-date">Aug 2023 – May 2026</div>
+                    </div>
+                    <div class="resume-item-subtitle">Amity University, Mumbai</div>
+                    <div class="resume-item-desc">
+                        <strong>CGPA: 8.47 / 10.0</strong>
+                        <br>
+                        Key Coursework: Operating Systems, Theory of Computation, Comparative Learning Algorithms, Linear Algebra for ML
+                    </div>
+                </div>
+
+                <div class="resume-item">
+                    <div class="resume-item-header">
+                        <div class="resume-item-title">IB Diploma Programme</div>
+                        <div class="resume-item-date">2020 – 2022</div>
+                    </div>
+                    <div class="resume-item-subtitle">Wockhardt Global School, Chhatrapati Sambhajinagar</div>
+                    <div class="resume-item-desc">
+                        <strong>Final Grade: 30 / 45</strong>
+                        <br>
+                        Higher Level: Computer Science, Mathematics: Analysis & Approaches, Business Management
+                        <br>
+                        Extended Essay: Analyzed time complexity of NegaMax algorithm vs. Alpha-Beta Pruning
+                    </div>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h2 class="resume-section-title">Publications & Research</h2>
+                <div class="resume-item">
+                    <div class="resume-item-header">
+                        <div class="resume-item-title">Discrete Square Residual Structures (DSRS)</div>
+                        <div class="resume-item-date">Jun 2025 – Sep 2025</div>
+                    </div>
+                    <div class="resume-item-desc">
+                        Introduced purely arithmetic framework extracting π from floor and ceiling operations. Proved ~75% of integers drive products toward π (accurate to 6 decimals at n=10⁶).
+                        <br><strong>DOI:</strong> 10.5281/zenodo.17144469
+                    </div>
+                </div>
+
+                <div class="resume-item">
+                    <div class="resume-item-header">
+                        <div class="resume-item-title">Probability in Regular 2-Polytopes</div>
+                        <div class="resume-item-date">Aug 2022 – Dec 2024</div>
+                    </div>
+                    <div class="resume-item-desc">
+                        Novel spatial probability model within regular 2D polytopes. Presented at Indian Mathematical Society Conference (MIT-WPU, Pune, Dec 2024).
+                    </div>
+                </div>
+
+                <div class="resume-item">
+                    <div class="resume-item-header">
+                        <div class="resume-item-title">Fibonacci from Pascal Rows: Ternary Coefficient Approach</div>
+                        <div class="resume-item-date">Feb 2025 – Present</div>
+                    </div>
+                    <div class="resume-item-desc">
+                        Developed CUDA GPU-accelerated algorithms achieving O(n) complexity for O(3ⁿ) problems. Perfect success rate across F₁ through F₁₀₀₀.
+                        <br><strong>DOI:</strong> 10.5281/zenodo.17412193
+                    </div>
+                </div>
+
+                <div class="resume-item">
+                    <div class="resume-item-header">
+                        <div class="resume-item-title">OEIS Contributor</div>
+                        <div class="resume-item-date">Ongoing</div>
+                    </div>
+                    <div class="resume-item-desc">
+                        Authored closed-form formula for A259569 (globally cited). Corrected inaccuracies in A130823. Active contributor on OEIS Wiki.
+                    </div>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h2 class="resume-section-title">Key Projects</h2>
+                <div class="resume-item">
+                    <div class="resume-item-title">Manim Mathematical Visualizations</div>
+                    <div class="resume-item-desc">
+                        Built 10+ Manim animations for mathematical research (500+ YouTube views). Visualized Fibonacci methods, probability distributions, number theory patterns.
+                    </div>
+                </div>
+
+                <div class="resume-item">
+                    <div class="resume-item-title">Django-POL Agro Web Platform</div>
+                    <div class="resume-item-desc">
+                        Full-stack CRUD platform connecting fertilizer wholesalers with farmers. Built during IB DP as client project.
+                    </div>
+                </div>
+
+                <div class="resume-item">
+                    <div class="resume-item-title">myBash - Command Repository</div>
+                    <div class="resume-item-desc">
+                        Collection of Bash commands, Linux one-liners, .bashrc customizations with automated Homebrew updates.
+                    </div>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h2 class="resume-section-title">Technical Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-category-resume">
+                        <h4>Languages</h4>
+                        <p>C++, C, Java, Python, SQL, Bash, CUDA</p>
+                    </div>
+                    <div class="skill-category-resume">
+                        <h4>Frameworks & Libraries</h4>
+                        <p>Django, Manim, Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn, Pygame</p>
+                    </div>
+                    <div class="skill-category-resume">
+                        <h4>Tools & Platforms</h4>
+                        <p>Git, Docker, Jenkins, Maven, Google Cloud, AWS, Google Colab, LaTeX</p>
+                    </div>
+                    <div class="skill-category-resume">
+                        <h4>Core Strengths</h4>
+                        <p>Mathematics, Data Structures & Algorithms, AI/ML, C Programming, Operating Systems, Computational Theory</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h2 class="resume-section-title">Leadership & Activities</h2>
+                <div class="resume-item">
+                    <div class="resume-item-header">
+                        <div class="resume-item-title">Head Boy</div>
+                        <div class="resume-item-date">May 2017 – May 2022</div>
+                    </div>
+                    <div class="resume-item-subtitle">Wockhardt Global School</div>
+                    <div class="resume-item-desc">
+                        Led school initiatives including playground renovation and MUN 2020 organization. Chaired UNICEF at WGS MUN 2021. Served on Rotaract Club Board. Led Stage Management Team at TEDxYouth@WGS.
+                    </div>
+                </div>
+
+                <div class="resume-item">
+                    <div class="resume-item-title">Stevia The Developer Initiative</div>
+                    <div class="resume-item-desc">
+                        Researched and promoted Stevia farming in Marathwada. Grew and tested plants independently. Raised awareness among farmers addressing health and economic benefits.
+                    </div>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h2 class="resume-section-title">Certifications</h2>
+                <div class="resume-item-desc">
+                    <ul>
+                        <li>Certified Lean Six Sigma (White Belt) - Process improvement with Minitab, Excel, Python</li>
+                        <li>Vipassana Meditation - Completed 3 residential courses, served in 1</li>
+                        <li>Domestic Data Entry Operator (English) - Government recognized</li>
+                        <li>Harvard Model United Nations (HMUN) 2018 - International delegate</li>
+                        <li>Youth India Expressed Summit - National-level youth leadership</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="download-buttons">
+                <a href="Aadesh_Resume_2025.pdf" class="download-btn" download>Download PDF Resume</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
