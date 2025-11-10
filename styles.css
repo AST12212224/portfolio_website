@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+
 * {
     margin: 0;
     padding: 0;
@@ -9,15 +11,40 @@
     --text: #ffffff;
     --accent: #ff3b30;
     --secondary: #1a1a1a;
-    --grid: #1a1a1a;
+    --teal: #00d9ff;
 }
 
 body {
-    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg);
+    font-family: "Space Mono", monospace;
+    background: #000000;
     color: var(--text);
     overflow-x: hidden;
     line-height: 1.6;
+}
+
+/* Gradient Background - Nothing Style */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        #000000 0%,
+        #001a1a 30%,
+        #003333 60%,
+        #005555 80%,
+        #007070 100%
+    );
+    z-index: -2;
+    opacity: 0.8;
+}
+
+/* Alternative gradient for different pages */
+.gradient-alt::before {
+    background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
 }
 
 /* Dot Matrix Background */
@@ -27,10 +54,14 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
-    opacity: 0.3;
-    background-image: radial-gradient(circle, #222 1px, transparent 1px);
-    background-size: 40px 40px;
+    z-index: -1;
+    opacity: 0.4;
+    background-image: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.15) 1px,
+        transparent 1px
+    );
+    background-size: 30px 30px;
     pointer-events: none;
 }
 
@@ -40,10 +71,11 @@ body {
     top: 0;
     left: 0;
     width: 0%;
-    height: 2px;
+    height: 3px;
     background: var(--accent);
     z-index: 9999;
     transition: width 0.1s;
+    box-shadow: 0 0 10px var(--accent);
 }
 
 /* Navigation */
@@ -56,30 +88,32 @@ nav {
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo {
-    font-size: 1.2rem;
-    font-weight: 600;
-    letter-spacing: -0.5px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
 .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
     list-style: none;
 }
 
 .nav-links a {
     color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.85rem;
+    font-weight: 400;
     transition: all 0.3s;
-    letter-spacing: 0.3px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .nav-links a:hover,
@@ -119,11 +153,11 @@ section {
 }
 
 .section-label {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 600;
+    letter-spacing: 3px;
+    font-weight: 700;
     margin-bottom: 1rem;
 }
 
@@ -132,6 +166,7 @@ section {
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -1px;
+    text-transform: uppercase;
 }
 
 /* Hero Section */
@@ -145,34 +180,36 @@ section {
 }
 
 .hero-label {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 600;
+    letter-spacing: 3px;
+    font-weight: 700;
     margin-bottom: 1.5rem;
     opacity: 0;
     animation: fadeInUp 0.8s forwards 0.2s;
 }
 
 .hero-title {
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-size: clamp(2.5rem, 8vw, 6rem);
     font-weight: 700;
     line-height: 1.1;
     margin-bottom: 2rem;
     letter-spacing: -2px;
     opacity: 0;
     animation: fadeInUp 0.8s forwards 0.4s;
+    text-transform: uppercase;
 }
 
 .hero-subtitle {
-    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-    color: rgba(255, 255, 255, 0.6);
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: rgba(255, 255, 255, 0.7);
     max-width: 700px;
-    line-height: 1.6;
+    line-height: 1.8;
     margin-bottom: 3rem;
     opacity: 0;
     animation: fadeInUp 0.8s forwards 0.6s;
+    font-weight: 400;
 }
 
 .hero-stats {
@@ -189,18 +226,19 @@ section {
 }
 
 .stat-number {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 700;
     color: var(--accent);
     line-height: 1;
+    letter-spacing: 2px;
 }
 
 .stat-label {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.5);
     margin-top: 0.5rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 .hero-cta {
@@ -214,32 +252,34 @@ section {
 .cta-button-secondary {
     padding: 1.2rem 2.5rem;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
+    font-weight: 700;
+    font-size: 0.85rem;
     transition: all 0.3s;
-    letter-spacing: 0.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: "Space Mono", monospace;
 }
 
 .cta-button {
     background: var(--accent);
-    border: 1px solid var(--accent);
+    border: 2px solid var(--accent);
     color: var(--text);
 }
 
 .cta-button:hover {
     background: transparent;
     transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 59, 48, 0.3);
 }
 
 .cta-button-secondary {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
     color: var(--text);
 }
 
 .cta-button-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.8);
     transform: translateY(-3px);
 }
 
@@ -251,52 +291,65 @@ section {
 }
 
 .featured-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 3rem;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .featured-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 59, 48, 0.3);
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 59, 48, 0.5);
     transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(255, 59, 48, 0.2);
 }
 
 .research-tag {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 600;
+    letter-spacing: 2px;
+    font-weight: 700;
     margin-bottom: 1.5rem;
     display: inline-block;
 }
 
 .research-title {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.3rem;
+    font-weight: 700;
     margin-bottom: 1rem;
-    line-height: 1.3;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .research-desc {
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 1.7;
-    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.8;
+    font-size: 0.9rem;
     margin-bottom: 1.5rem;
+}
+
+.research-meta {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .card-link {
     color: var(--accent);
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.9rem;
+    font-weight: 700;
+    font-size: 0.85rem;
     transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .card-link:hover {
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 /* Quick Links Grid */
@@ -307,8 +360,8 @@ section {
 }
 
 .quick-link-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 3rem;
     text-decoration: none;
     color: var(--text);
@@ -318,21 +371,24 @@ section {
 }
 
 .quick-link-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 59, 48, 0.3);
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 59, 48, 0.5);
     transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(255, 59, 48, 0.2);
 }
 
 .quick-link-card h3 {
     font-size: 1.5rem;
     margin-bottom: 0.8rem;
-    font-weight: 600;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .quick-link-card p {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.95rem;
-    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    line-height: 1.7;
 }
 
 .link-arrow {
@@ -360,8 +416,8 @@ section {
 .content-card,
 .project-card,
 .research-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 2.5rem;
     transition: all 0.4s;
 }
@@ -369,9 +425,10 @@ section {
 .content-card:hover,
 .project-card:hover,
 .research-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 59, 48, 0.3);
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 59, 48, 0.5);
     transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(255, 59, 48, 0.2);
 }
 
 /* Page Title */
@@ -386,11 +443,12 @@ section {
     font-weight: 700;
     letter-spacing: -2px;
     margin-bottom: 1rem;
+    text-transform: uppercase;
 }
 
 .page-title p {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
     max-width: 700px;
     margin: 0 auto;
 }
@@ -404,8 +462,8 @@ section {
 
 .cert-item,
 .timeline-item {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 2rem;
     margin-bottom: 1.5rem;
     transition: all 0.3s;
@@ -413,28 +471,33 @@ section {
 
 .cert-item:hover,
 .timeline-item:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 59, 48, 0.3);
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 59, 48, 0.5);
+    box-shadow: 0 10px 40px rgba(255, 59, 48, 0.2);
 }
 
 .cert-title,
 .timeline-title {
     font-size: 1.3rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .cert-org,
 .timeline-date {
     color: var(--accent);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .cert-desc,
 .timeline-desc {
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.8;
 }
 
 /* Animations */
@@ -466,7 +529,7 @@ section {
         padding: 2rem;
         gap: 2rem;
         transition: right 0.4s;
-        border-left: 1px solid rgba(255, 255, 255, 0.05);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .nav-links.active {
