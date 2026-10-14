@@ -1,0 +1,579 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=2 cm, % seperation between body and page edge from the top
+    bottom=2 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 79, 144} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={Aadesh Tikhe's Master Resume},
+    pdfauthor={Aadesh Tikhe},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    % \usepackage[T1]{fontenc} % this breaks sb2nov
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+
+
+% Some settings:
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0cm} % set column seperation
+\makeatletter
+\let\ps@customFooterStyle\ps@plain % Copy the plain style to customFooterStyle
+\patchcmd{\ps@customFooterStyle}{\thepage}{
+    \color{gray}\textit{\small Aadesh Tikhe - Page \thepage{} of \pageref*{LastPage}}
+}{}{} % replace number by desired string
+\makeatother
+\pagestyle{customFooterStyle}
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\circ$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0.4 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0.2 cm + 0.00001 cm
+    }{
+        0.2 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+% Add near your other custom commands (before \begin{document} is fine):
+\def\monthname{%
+    \ifcase\month
+    \or January\or February\or March\or April\or May\or June%
+    \or July\or August\or September\or October\or November\or December%
+    \fi
+}
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0.2 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{Last updated in \monthname\ \the\year}\hspace{\widthof{Last updated in September 2024}}
+    }}}%
+  }%
+}%
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
+
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{}
+
+    \placelastupdatedtext
+    \begin{header}
+        \textbf{\fontsize{24 pt}{24 pt}\selectfont Aadesh Tikhe}
+
+        \vspace{0.3 cm}
+
+        \normalsize
+        \mbox{{\color{black}\footnotesize\faMapMarker*}\hspace*{0.13cm}Chhatrapati Sambhajinagar, India}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{mailto:aadeshtikhe24@gmail.com}{\color{black}{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}aadeshtikhe24@gmail.com}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{tel:+91 9130511165}{\color{black}{\footnotesize\faPhone*}\hspace*{0.13cm}+91 9130511165}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://aadesh24.com}{\color{black}{\footnotesize\faGlobe}\hspace*{0.13cm}aadesh24.com}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://orcid.org/0009-0009-3185-0845}{\color{black}{\footnotesize\faOrcid}\hspace*{0.13cm}0009-0009-3185-0845}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://www.linkedin.com/in/ast12212224}{\color{black}{\footnotesize\faLinkedinIn}\hspace*{0.13cm}Aadesh Tikhe}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://github.com/AST12212224}{\color{black}{\footnotesize\faGithub}\hspace*{0.13cm}AST12212224}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://medium.com/@aadeshtikhe24}{\color{black}{\footnotesize\faMedium}\hspace*{0.13cm}aadeshtikhe24}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm% 
+        \mbox{\hrefWithoutArrow{https://math.stackexchange.com/users/1380480/aadesh-tikhe}{\color{black}{\footnotesize\faStackExchange}\hspace*{0.13cm}aadesh-tikhe}}%
+        
+    \end{header}
+
+    \vspace{0.3 cm - 0.3 cm}
+
+
+
+\section{About Me!}
+
+        \begin{onecolentry}{
+            I'm obsessively curious. I can't see a mathematical pattern without wanting to pull it apart and see if it connects to something else. My work is a mix of rigorous research (published on OEIS, presented at conferences) and experimental coding projects where I just try things. I think with whatever knowledge I have, recombine ideas in weird ways, and occasionally stumble onto something that works. I'm not just interested in solving known problems. I want to find the problems no one's asking yet. My north star is building things that are both mathematically elegant and practically useful.}
+
+            \textbf{Goal:} Advance interpretability in deep learning by applying insights from number theory and algorithmic analysis to neural network behavior. I aspire to build ethical, human-centered systems that simplify complexity and deepen understanding.
+
+            \textbf{Practice:} Committed Vipassana meditator: completed 3 ten-day silent residential courses and served in 1. A discipline that shapes how I approach sustained, deep-focus research.
+        \end{onecolentry}
+        
+\section{Research Highlights}
+
+    \begin{onecolentry}
+        \begin{highlights}
+            \item \textbf{A consistent method across four independent research lines:} take a classical discrete structure (Pascal's triangle, perfect squares, prime factorization, spatial polytopes) and apply difference or floor/ceiling operations to expose a hidden unifying structure underneath it.
+            \item \textbf{Layered Pascal Transform Triangles} unified five previously disconnected OEIS sequences (including one of the author's own closed-form contributions, A259569) under a single generating framework, closing a gap that had gone unnoticed since Voigt (1901) and Piza (1947).
+            \item \textbf{DSRS} (floor/ceiling structures on perfect squares) was reviewed by \textbf{Simon Plouffe} (OEIS co-contributor), who called it "not trivial" and forwarded it to \textbf{Jean-Paul Allouche} (CNRS) for further analysis.
+            \item \textbf{C2 Conjecture}, a recursive prime decomposition result verified across 1 billion+ primes with zero counterexamples, drew sustained engagement from \textbf{Paul Lockhart} (\textit{A Mathematician's Lament}), who assessed it as comparably difficult to open problems like $p = n^2+1$.
+            \item \textbf{AIDEAS-OEIS} extends this same instinct (pattern-checking and structural validation) into a working AI system, applying LLM + symbolic verification to flag errors across 2,000+ OEIS entries.
+        \end{highlights}
+    \end{onecolentry}
+    
+\section{Entrepreneurship}
+
+\begin{twocolentry}{
+    \textit{July 2026 – Present}}
+    \textbf{Founder \& Managing Director, ATAEON Cognition Private Limited} \\
+    \textit{DPIIT-recognized startup (Startup India), Certificate No. DIPP282717}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Founded and incorporated ATAEON Cognition Private Limited (20 July 2026); recognized as a startup by the \textbf{Department for Promotion of Industry and Internal Trade (DPIIT)}, Government of India, on 13 September 2026, in the Human Resources industry, Recruitment sector. \href{https://aadesh24.com/certificates/dpiit-startup-recognition-2026.pdf}{Certificate Link}
+        \item Built \textbf{LabourVala} (\href{https://labourvala.com}{labourvala.com}), the company's first product: an ethical hiring platform connecting skilled daily-wage workers with verified contractors in Chhatrapati Sambhajinagar. The product is complete and in its launch phase
+        \item Contractors and companies are verified with licences and documents, and workers with Aadhaar and PAN; phone numbers are revealed only after both sides accept, which keeps matches on the platform
+        \item 4-digit arrival codes create a digital attendance record, two-way ratings build trust scores, and a flat fee is charged only per successful match; Marathi-first web and Android apps
+    \end{highlights}
+\end{onecolentry}
+
+    \section{Education \& Academic Achievements}
+
+
+
+        
+        \begin{twocolentry}{
+            \textit{Aug 2023 – June 2026}}
+            \textbf{Amity University, Mumbai} \\
+            \textit{Bachelor of Computer Applications (BCA)}
+        \end{twocolentry}
+        
+        \vspace{0.1cm}
+        
+        \begin{onecolentry}
+            \begin{highlights}
+                \item CGPA: 8.39 / 10.0 (till date)
+                \item \textbf{Key Coursework:} Operating Systems, Theory of Computation, Comparative Learning Algorithms, Linear Algebra for ML
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.2cm}
+        
+        \begin{twocolentry}{
+            \textit{May 2017 – May 2022}}
+            \textbf{Wockhardt Global School (IB), Chhatrapati Sambhajinagar} \\
+            \textit{IB Diploma Programme (DP), 2020–2022}: Final Grade 30 / 45 \\
+            \textit{IB Middle Years Programme (MYP), 2017–2020}: Final Grade 85\% \\
+            \textbf{Head Boy \& Leadership Roles}
+        \end{twocolentry}
+        
+        \vspace{0.1cm}
+        
+        \begin{onecolentry}
+            \begin{highlights}
+                \item \textbf{Extended Essay:} Analyzed the time complexity of the NegaMax algorithm (Strazilla) vs. Alpha-Beta Pruning (NNUE Stockfish)
+                \item \textbf{Main Subjects:} Computer Science HL, Mathematics: AA HL, Business Management HL
+                \item Led school initiatives as \textbf{Head Boy}, including playground renovation and MUN 2020 organization
+                \item Represented school at \textbf{Harvard Model United Nations (HMUN) 2018}, an international MUN conference
+                \item \textbf{Chaired UNICEF at WGS MUN} 2021; facilitated engaging agendas and resolutions
+                \item Served on the \textbf{Board of Directors, Rotaract Club Aurangabad}, fostering leadership and collaboration
+                \item Participated in the \textbf{Youth India Express Summit}, a national-level youth leadership event
+                \item Handled \textbf{stage management and decoration at TEDxYouth@WockhardtGlobalSchool} (Nov 2021); oversaw technical execution, speaker coordination and stage design
+                \item Initiated \textbf{Stevia The Developer} (2019–2020, MYP 5 / Grade 10): Marathwada faces chronic water scarcity, and sugarcane, its main cash crop, consumes large amounts of water. Researched Stevia as a low-water natural sweetener, grew and tested it on our own farmland, and ran awareness sessions for farmers on its water, health and economic benefits; overcame stage fear by addressing these diverse audiences
+            \end{highlights} 
+        \end{onecolentry}
+
+
+\section{Curiosity-Driven Research \& Publications}
+        
+\begin{twocolentry}{
+    \textit{Aug 2022 - Dec 2024}
+}
+    \textbf{Probability in Regular 2-Polytopes}
+
+    \vspace{0.10 cm}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Independently conducted research from 2022–2024 on a novel spatial probability model within regular 2D polytopes
+        \item Proposed a Periodic Cotangent Function to model the probability distribution of a 0 polytope relative to the centroid and boundary
+        \item Presented this work at the \textbf{Indian Mathematical Society Conference} (MIT-WPU, Pune) on \textbf{25 December 2024}, gaining valuable feedback and insights
+        \item Full explanation available via presentation video: \href{https://youtu.be/Vwe1ojJnU_A?si=o3FbliMeOJcqa_1W}{youtu.be/Vwe1ojJnU\_A}; written paper still in progress
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.1cm}
+
+\begin{twocolentry}{
+    \textit{Feb 2024 – 2025}}
+    \textbf{Layered Pascal Transform Triangles: A Unified Framework for Iterated Finite Differences on Monomials}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Organized iterated forward differences $\Delta^\ell(x^p)$ as a parametrized family of triangular coefficient arrays indexed by layer $\ell$, where Layer 0 recovers classical Pascal's triangle and higher layers yield transformed structures retaining Pascal-like organization
+        \item Derived a closed-form coefficient generator $C_{p,\ell}(v)$ that directly produces individual polynomial coefficients without requiring polynomial expansion or Stirling number basis conversion, enabling $O(\ell)$ access to specific coefficients when $p \gg \ell$
+        \item Unified five previously disconnected OEIS sequences (A259569, the author's own closed-form contribution, plus A001117, A000918, A000919 and A000920) as fixed-layer projections of a single underlying structure
+        \item Connected the framework to historical work by Voigt (1901, ``Konformanten'') and Piza (1947, ``D-coefficients''), showing both contain numerical values matching Layers 2 and 3 but lacked systematic organization, direct coefficient generation, or unification across sequences
+        \item Entire construction uses only elementary combinatorial tools (binomial coefficients, forward difference operator), accessible at the undergraduate level while providing computational utility for sparse coefficient extraction
+        \item Originated from informal exploration of Pascal's triangle patterns in 2023; developed into a formal framework starting February 2024
+        \item Preprint archived on Zenodo with DOI: \href{https://doi.org/10.5281/zenodo.18256084}{10.5281/zenodo.18256084}
+    \end{highlights}
+\end{onecolentry}
+
+\begin{twocolentry}{
+    \textit{Apr 2025 – Present}
+}
+    \textbf{Fibonacci Numbers from Pascal Rows: A Ternary Coefficient Approach}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Established novel algebraic framework for transforming Pascal triangle rows into Fibonacci numbers through systematic coefficient selection where $c_i \in \{-1, 0, 1\}$
+        \item Developed six complete enumeration strategies with CUDA GPU acceleration, achieving exhaustive analysis up to computational limit $3^{22}$ (31.4 billion combinations)
+        \item Designed a greedy algorithm leveraging palindromic symmetry and center-dominance properties as a candidate $O(n)$ heuristic for the exponential $O(3^n)$ search space
+        \item Later identified cases where the greedy heuristic does not reliably reproduce correct coefficient selections; currently investigating the boundary conditions under which it holds and does not hold
+        \item Preprint archived on Zenodo with DOI: \href{https://doi.org/10.5281/zenodo.17412193}{10.5281/zenodo.17412193}
+        \item Code implementation available at \href{https://github.com/AST12212224/Pascals-triangle-row-for-Fibonacci}{GitHub Repository}
+    \end{highlights}
+\end{onecolentry}
+
+\begin{twocolentry}{
+    \textit{June 2025 – Sept 2025}
+}
+
+    \textbf{Discrete Square Residual Structures (DSRS): A Framework Where Every Integer Reveals Its Own Connection to $\pi$}
+    
+    \vspace{0.10 cm}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Introduced a purely arithmetic framework using floor and ceiling operations on perfect squares: for fixed $\mu$, defined $U(n) = \lceil n^2/\mu \rceil$ and $L(n) = \lfloor n^2/\mu \rfloor$, producing infinite products $P(\mu) = \prod_{n=n_0}^{\infty} \frac{\Delta_L(n)}{\Delta_U(n)}$
+        \item Computational evidence up to $N = 10^6$ and $\mu \leq 70{,}000$ reveals a sharp dichotomy: $P(\mu) \to \pi/2$ when $\mu \not\equiv 0 \pmod{4}$, and $P(\mu) \to 1$ when $\mu \equiv 0 \pmod{4}$ or $\mu = 1$
+        \item Provided structural argument showing all non-multiples of 4 reduce to the $\mu = 2$ case (a floor-ceiling encoding of the Wallis product) via residual cancellation, with increasing entropy for larger $\mu$ requiring more terms to stabilize
+        \item Identified OEIS correspondences: $\mu = 2$ produces A052928, A007590, A000982, A063196; $\mu = 3$ yields A004523, A000212, A008810, A130823; $\mu = 4$ yields A008619, A002620, A004652, A161239
+        \item Research reviewed by \textbf{Simon Plouffe} (OEIS co-contributor, Inverse Symbolic Calculator), who described the work as ``an interesting topic'' and ``not trivial,'' forwarded the paper to \textbf{Jean-Paul Allouche} (CNRS, expert in infinite products and automatic sequences) for further analysis, and offered an ArXiv recommendation
+        \item Preprint archived on Zenodo with DOI: \href{https://doi.org/10.5281/zenodo.17519713}{10.5281/zenodo.17519713}; complete source code at \href{https://github.com/AST12212224/DSRS}{GitHub Repository}
+    \end{highlights}
+\end{onecolentry}
+
+
+\begin{twocolentry}{
+    \textit{May 2026 – Present}}
+    \textbf{A Recursive Prime Decomposition Conjecture (C2)}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Proposed Conjecture C2: for every prime $p > 2$, there exist $q, r \in \{1\} \cup \{\text{primes}\}$ with $q < p$ such that $p = 2q + r$ or $p = 2q - r$; since $r$ also decomposes, every prime unfolds into a binary tree terminating at leaves of 1
+        \item Formulated the strictly stronger C2-Additive variant: additive only ($p = 2q + r$, $q < p/2$), eliminating $\pm$ ambiguity and producing canonical single-direction decomposition trees
+        \item Conjecture is strictly stronger than Lemoine's conjecture (1895) restricted to the prime domain: C2 requires $q < p$, Lemoine does not; if C2 is proved, Lemoine for primes follows as a corollary
+        \item Verified C2 for all 1,008,309,544 primes (up to $\sim 2 \times 10^{10}$) with \textbf{zero counterexamples}, using a two-stage CUDA pipeline on NVIDIA RTX 5070: sliding-window search (500 candidates) followed by brute-force on failures with Miller-Rabin primality testing, achieving $\sim$150M primes/sec throughput; built interactive HTML visualizations of recursive decomposition trees for exploratory analysis
+        \item Reviewed by \textbf{Paul Lockhart} (mathematician, author of \textit{A Mathematician's Lament}), who assessed the conjecture as ``possibly even more difficult'' than classical Diophantine problems like $p = n^2 + 1$, situating it within the structural gap between additive and multiplicative number theory
+        \item Posed the open question: does iterative generation from $S_0 = \{1, 2\}$ via $2q + r$ produce exactly the primes? If yes, this would yield a structural definition of primality independent of the Fundamental Theorem of Arithmetic
+        \item Preprint archived on Zenodo with DOI: \href{https://doi.org/10.5281/zenodo.20225703}{10.5281/zenodo.20225703}; source code at \href{https://github.com/AST12212224}{GitHub}
+    \end{highlights}
+\end{onecolentry}
+
+
+\begin{twocolentry}{
+    \textit{In progress}}
+    \textbf{Dimensional Primality: A Geometric Hierarchy of Integers via Discrete Hyper-Rectangles}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Interprets integer factorization geometrically: $N$ as the volume of a discrete hyper-rectangle with all integer sides greater than 1; proved the maximum dimension in which $N$ admits such a genuine representation is exactly $\Omega(N)$, the number of prime factors counted with multiplicity
+        \item Defined a strictly nested hierarchy $D_1 \supset D_2 \supset D_3 \supset \cdots$ with $D_n = \{N : \Omega(N) \geq n\}$, and \textit{$n$-dimensional primes} as the integers outside $D_n$ (1 together with the $k$-almost primes, $k \leq n-1$), recovering the classical primes at $n = 2$
+        \item Proved a forced-collapse corollary (any representation in more than $\Omega(N)$ dimensions has at least $n - \Omega(N)$ unit sides) and that the smallest member of $D_n$ is $2^n$, attained uniquely by the cube $(2, \ldots, 2)$
+        \item Working paper archived on Zenodo with DOI: \href{https://doi.org/10.5281/zenodo.20645595}{10.5281/zenodo.20645595}
+    \end{highlights}
+\end{onecolentry}
+
+\section{Blog \& Expository Writing}
+
+\begin{twocolentry}{
+    \textit{Dec 2024 – Apr 2025}
+}
+    \textbf{Efficient Fibonacci Computation: Édouard Lucas's Pascal Triangle Method} (Medium)
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Analyzed Lucas's combinatorial approach for calculating the exact $n^{th}$ Fibonacci number without recursion, comparing computational complexity against classical methods (matrix exponentiation, Binet's formula, naive recursion)
+        \item Demonstrated feasibility in resource-constrained environments; code available at \href{https://github.com/AST12212224/Efficient-Fibonacci-N-th-term-calculation-E_Lucas.git}{GitHub Repository}
+        \item Full write-up: \href{https://medium.com/@aadeshtikhe24/efficient-fibonacci-computation-instantly-calculate-the-exact-nth-number-directly-no-recursion-ed13bb284c71}{Medium Blog}
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.1cm}
+
+\begin{twocolentry}{
+    \textit{Dec 2025}
+}
+    \textbf{Escaping the Killer by Always Getting Closer} (Self-published)
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Expository paper exploring how a locally ``greedy'' rule (always decrease distance to target) can produce paths of arbitrarily large, even infinite, total length, using the Archimedean spiral as the constructive example
+        \item Derived the closed-form arc length formula $L = \frac{\pi R^2}{m}\sqrt{1 + \left(\frac{m}{2\pi R}\right)^2} + \frac{m}{4\pi}\ln\!\left(\frac{2\pi R}{m}\left(1 + \sqrt{1 + \left(\frac{m}{2\pi R}\right)^2}\right)\right)$ and showed $L \to \infty$ as the radial step $m \to 0^+$
+        \item Connected the result to gradient descent pathologies: locally improving loss at every step does not bound total path complexity or guarantee convergence in practical time
+        \item Available at \href{https://aadesh24.com/Escaping_the_Killer_by_Always_Getting_Closer.pdf}{aadesh24.com}
+    \end{highlights}
+\end{onecolentry}
+
+    
+\section{Projects and Contributions}
+
+\begin{twocolentry}{
+    \textit{Jan 2026 – May 2026}
+}
+    \textbf{AIDEAS-OEIS: AI-Driven Evaluation of Arithmetic Sequences in OEIS} (Python, LLMs)
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Developed a hybrid verification system combining \textbf{Qwen2.5-Math:7b} (served locally via Ollama) with SymPy symbolic computation and LODA program synthesis to automatically interpret, validate, and flag erroneous formulas across OEIS entries
+        \item Built a three-verifier pipeline: LODA algorithmic verification ($\sim$19\% hit rate) $\to$ LLM formula-to-code generation in Restricted Python sandbox $\to$ SymPy closed-form evaluation, reconciled via Bayesian classifier with confidence scores
+        \item Validated 2,041 OEIS sequences: \textbf{51.6\%} HIGH\_CONFIDENCE\_VALID, 40.3\% NEEDS\_HUMAN\_REVIEW, 8.1\% LLM\_INTERPRETATION\_ERROR, with Wilson 95\% confidence intervals confirming statistical stability
+        \item Designed with crash-resume safety (SQLite persistence per sequence), Docker containerization, and CSV/JSON /SQLite export for community-scale deployment
+        \item BCA final-year capstone project (7 credits, scored 90/100); open-source at \href{https://github.com/AST12212224/AIDEAS-OEIS}{GitHub Repository}
+    \end{highlights}
+\end{onecolentry}
+
+
+        \begin{twocolentry}{
+            \textit{\href{https://oeis.org/wiki/User:Aadesh_Tikhe}{oeis.org/wiki/User:Aadesh}}}
+            \textbf{OEIS Contributor – Integer Sequence Research}
+        \end{twocolentry}
+        
+        \begin{onecolentry}
+            \begin{highlights}
+                \item \textbf{Authored closed-form formula for OEIS} \href{https://oeis.org/A259569}{A259569}; later shown to be a Layer 2 projection of the author's unified Pascal transform framework (see Layered Pascal Transform Triangles above)
+                \item \textbf{Corrected mathematical inaccuracies in} \href{https://oeis.org/A130823}{A130823}, improving sequence integrity and documentation
+                \item Active contributor on the \href{https://oeis.org/wiki/User:Aadesh_Tikhe}{OEIS Wiki}, a globally recognized encyclopedia of integer sequences
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.1cm}
+
+        \begin{twocolentry}{
+            \textit{Ongoing}
+        }
+            \textbf{Manim Codes for Math Research Presentation }(Python [Manim], C++)
+        \end{twocolentry}
+        
+        \vspace{0.10 cm}
+        
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Built 10+ Manim animations to visualize novel mathematical concepts (Fibonacci methods, probability distributions), garnering 500+ views on YouTube.
+                \item Used in YouTube presentation: \href{https://youtu.be/Vwe1ojJnU_A?si=0aWaau3x-QwqNVsj}{Watch here}.
+                \item \href{https://github.com/AST12212224/Manim-codes-for-my-maths-research-presentation}{GitHub Repository}
+            \end{highlights}
+        \end{onecolentry}
+
+        \begin{twocolentry}{
+            \textit{2021 – 2022}
+        }
+            \textbf{Django-POL\_Agro Web Platform }(Python, HTML, CSS)
+        \end{twocolentry}
+        
+        \vspace{0.10 cm}
+        
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Built for a client during IBDP; developed a full-stack Django-based CRUD platform.
+                \item Connects fertilizer wholesalers with farmers to streamline queries and product access.
+                \item Hosted on localhost for demo; source code: \href{https://github.com/AST12212224/Django-POL_Agro}{GitHub Repository}.
+            \end{highlights}
+        \end{onecolentry}
+
+        
+        \begin{twocolentry}{
+            \textit{Ongoing}
+        }
+            \textbf{myBash – Bash \& Linux Commands Repository }(Shell)
+        \end{twocolentry}
+        
+        \vspace{0.10 cm}
+        
+        \begin{onecolentry}
+            \begin{highlights}
+                \item A collection of useful Bash commands, Linux one-liners, and \texttt{.bashrc} customizations. Includes a cron job for auto-updating Homebrew monthly. Personal notes and hands-on summaries from tutorials.
+                \item \href{https://github.com/AST12212224/myBash}{GitHub Repository}
+            \end{highlights}
+        \end{onecolentry}
+    
+    \section{Key Skills}
+        
+        \begin{onecolentry}
+            \textbf{Languages:} C++, C, Python, SQL, Bash, Cuda, Rust \\
+            \textbf{Libraries \& Frameworks:} Django, Manim, Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn, Pygame \\
+            \textbf{Tools \& Platforms:} Git, Docker, AWS, Google Colab, LaTeX.\\
+            \textbf{Core Strengths:} Mathematics, Data Structures \& Algorithms, Artificial Intelligence, Machine Learning, C Programming, Operating Systems (incl. Bash Shell), and Computational Theory \\
+            \textbf{Hobbies \& Interests} 
+            \begin{itemize}
+                \item Painting – Creative expression through various mediums.
+                \item Cycling \& Hiking – Fitness and nature exploration.
+                \item Piano – Self-taught; composed and performed a piano cover, published on \href{https://youtu.be/MvuJxi9bqvk?si=OAYBCSiWyTuYn6db}{YouTube}.
+                \item Meditation – Vipassana practice for mindfulness.
+                \item Mathematical Puzzles – Exploring number theory and logic.
+            \end{itemize}
+            \textbf{Spoken Languages:} English, Hindi, Marathi, German (A1 level) 
+        \end{onecolentry}
+
+
+        
+\section{Specialised Courses \& Certifications}
+
+    \begin{onecolentry}
+        \begin{itemize}
+        \item \textbf{Discrete Mathematics – NPTEL} (IIT Madras, Jan–Apr 2026): 12-week course; scored \textbf{91\%} (Elite certification; one of 979 candidates certified). Topics include combinatorics, graph theory, recurrence relations, and formal logic. \href{https://nptel.ac.in/noc/E_Certificate/NOC26CS68S25130047104321322}{Certificate Link}
+        \item \textbf{Theory of Computation – NPTEL} (IIT Hyderabad, Jan–Apr 2026): 12-week course; scored 60\% (Elite certification; one of 262 candidates certified). Topics include automata theory, context-free grammars, Turing machines, and decidability. \href{https://nptel.ac.in/noc/E_Certificate/NOC26CS85S35130004104321322}{Certificate Link}
+        \item \textbf{Machine Learning Specialization – Andrew Ng (Stanford Online, DeepLearning.AI)} (Jan 2026): Completed all three courses: supervised learning, advanced algorithms, and unsupervised learning including recommender systems and reinforcement learning. \href{https://coursera.org/share/5b3c25baf30c71e878a3dc5d4d36688a}{Certificate Link}
+        \item \textbf{Certified Lean Six Sigma (White Belt)} (Six Sigma Society, July 2023, Cert. No. 76953176): Gained process improvement experience using Minitab, Excel, Python, Lucidchart, PowerPoint, and Microsoft Project. \href{https://aadesh24.com/certificates/lean-six-sigma-white-belt-2023.pdf}{Certificate Link}
+        \item \textbf{Certificate of Appreciation – TEDxYouth@WockhardtGlobalSchool} (Nov 2021): for stage management and decoration. \href{https://aadesh24.com/certificates/tedxyouth-wgs-2021.png}{Certificate Link}
+        \item All certificates, with verification links: \href{https://aadesh24.com/certifications.html}{aadesh24.com/certifications}
+            
+
+        \end{itemize}
+    \end{onecolentry}
+
+
+    
+
+\end{document}

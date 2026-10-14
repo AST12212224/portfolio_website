@@ -4,3 +4,9 @@ namecheap-order-*.pdf
 Aadesh_Resume_2026.pdf
 TOC.html
 TOC_files/
+
+# LaTeX build output
+resume/*.aux
+resume/*.log
+resume/*.out
+resume/*.pdf
