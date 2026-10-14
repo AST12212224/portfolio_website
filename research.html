@@ -18,6 +18,7 @@
                     <a href="research.html">Research</a>
                     <a href="projects.html">Projects</a>
                     <a href="writing.html">Writing</a>
+                    <a href="certifications.html">Certificates</a>
                     <a href="resume.html">CV</a>
                 </nav>
                 <button class="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
@@ -32,6 +33,41 @@
                     figure you can play with — drag the sliders, hover the plots.
                 </p>
             </div>
+
+            <!-- Dimensional primality -->
+            <article class="entry t-dim" id="dimensional-primality">
+                <div>
+                    <span class="status">Preprint</span><span class="kicker">2026</span>
+                    <h3>Dimensional Primality: A Geometric Hierarchy of Integers via Discrete Hyper-Rectangles</h3>
+                    <p class="meta">Zenodo · <a href="https://doi.org/10.5281/zenodo.20645595">10.5281/zenodo.20645595</a></p>
+                    <p>
+                        Treat $N$ as the volume of a box whose integer sides are all
+                        greater than 1. The highest dimension in which $N$ can be built as
+                        such a <em>genuine</em> hyper-rectangle is exactly $\Omega(N)$, the
+                        number of its prime factors counted with multiplicity.
+                    </p>
+                    <ul>
+                        <li>A strictly nested hierarchy $D_1 \supsetneq D_2 \supsetneq D_3 \supsetneq\cdots$ with $D_n=\{N:\Omega(N)\ge n\}$ and $\bigcap_n D_n=\varnothing$.</li>
+                        <li><em>$n$-dimensional primes</em> are the integers outside $D_n$: $1$ together with the $k$-almost primes for $k\le n-1$. The case $n=2$ gives back the ordinary primes.</li>
+                        <li>Forced collapse: written in more than $\Omega(N)$ dimensions, at least $n-\Omega(N)$ sides must equal $1$.</li>
+                        <li>The smallest member of $D_n$ is $2^n$, reached only by the cube $(2,\dots,2)$ — the point where each new dimension first becomes possible.</li>
+                    </ul>
+                    <div class="actions">
+                        <a class="btn" href="https://doi.org/10.5281/zenodo.20645595">Preprint</a>
+                        <a class="btn" href="Discrete_Hyper_Rectangles.pdf">PDF</a>
+                    </div>
+                </div>
+                <figure class="fig tall" data-fig="dimprime">
+                    <canvas aria-label="An integer drawn as a hyper-rectangle, with the Omega hierarchy below"></canvas>
+                    <figcaption>
+                        <b>Figure 1.</b> Top: $N$ built as an $n$-dimensional box (dimensions
+                        above 3 appear as stacked copies). Raise $n$ past $\Omega(N)$ and the box
+                        collapses: sides of $1$ appear. Bottom: $\Omega(k)$ for $k\le 64$; bars
+                        above the dashed line are in $D_n$, outlined bars are the thresholds
+                        $2^n$. Click a bar to draw that number.
+                    </figcaption>
+                </figure>
+            </article>
 
             <!-- C2 -->
             <article class="entry t-prime" id="c2">
@@ -60,7 +96,7 @@
                 <figure class="fig tall" data-fig="c2">
                     <canvas aria-label="Decomposition tree of a prime"></canvas>
                     <figcaption>
-                        <b>Figure 1.</b> The decomposition tree of any prime. Solid edges go
+                        <b>Figure 2.</b> The decomposition tree of any prime. Solid edges go
                         to $q$ (doubled), dashed edges to $r$. Type a prime or roll a random
                         one; hover a node to see its equation.
                     </figcaption>
@@ -96,7 +132,7 @@
                 <figure class="fig" data-fig="dsrs">
                     <canvas aria-label="Partial products of the DSRS product"></canvas>
                     <figcaption>
-                        <b>Figure 2.</b> Partial products $P_N(\mu)$ for $N$ up to $4\cdot10^4$,
+                        <b>Figure 3.</b> Partial products $P_N(\mu)$ for $N$ up to $4\cdot10^4$,
                         computed live in your browser. Slide $\mu$ through a multiple of 4 and
                         watch the limit jump from $\pi/2$ to $1$.
                     </figcaption>
@@ -128,7 +164,7 @@
                 <figure class="fig" data-fig="pascalfib">
                     <canvas aria-label="Pascal row with ternary coefficients summing to a Fibonacci number"></canvas>
                     <figcaption>
-                        <b>Figure 3.</b> Brute force over all $3^n$ sign choices, run in your
+                        <b>Figure 4.</b> Brute force over all $3^n$ sign choices, run in your
                         browser. <span style="color: var(--c)">+1</span> adds an entry,
                         <span style="color: var(--c2)">−1</span> subtracts it, 0 skips it. Step
                         through every solution.
@@ -160,7 +196,7 @@
                 <figure class="fig tall" data-fig="layers">
                     <canvas aria-label="Layered Pascal transform triangle"></canvas>
                     <figcaption>
-                        <b>Figure 4.</b> Coefficients of $\Delta^{\ell}(x^p)$ (layer 0: $(x+1)^p$), highest power
+                        <b>Figure 5.</b> Coefficients of $\Delta^{\ell}(x^p)$ (layer 0: $(x+1)^p$), highest power
                         first, computed exactly with BigInt. Raise $\ell$: the constant
                         terms (red) become $\ell!\,S(p,\ell)$ — the OEIS sequences named in
                         the readout. Hover any cell.
@@ -192,8 +228,8 @@
                 <figure class="fig" data-fig="polytope">
                     <canvas aria-label="Monte Carlo points in a regular polygon"></canvas>
                     <figcaption>
-                        <b>Figure 5.</b> Monte Carlo: red points are nearer the centroid than
-                        any edge. The “exact” value is the area under the $n$ parabolic arcs,
+                        <b>Figure 6.</b> Monte Carlo: coloured points are nearer the centroid
+                        than any edge. The “exact” value is the area under the $n$ parabolic arcs,
                         $\frac{t+t^3/3}{2\tan(\pi/n)}$ with $t=\tan\frac{\pi}{2n}$, which tends
                         to $1/4$ (the disc) as $n\to\infty$.
                     </figcaption>

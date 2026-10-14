@@ -375,7 +375,7 @@
                 if (x * x + y * y > 1) continue;
                 let dmin = Infinity;
                 for (let k = 0; k < n; k++) {
-                    const th = ((2 * k + 1) * Math.PI) / n + rot;
+                    const th = (2 * k * Math.PI) / n + rot; // outward normal of edge k
                     dmin = Math.min(dmin, a - (x * Math.cos(th) + y * Math.sin(th)));
                 }
                 if (dmin < 0) continue;
@@ -1017,6 +1017,213 @@
             print(raw, !c ? "" : CMDS[c] ? CMDS[c](args.join(" ")) : `${c}: command not found`);
         });
         term.addEventListener("click", () => inp.focus({ preventScroll: true }));
+    };
+
+    // ---------- Dimensional primality: N as a genuine n-dimensional box ----------
+    const factorize = (N) => {
+        const f = [];
+        for (let p = 2; p * p <= N; p++) while (N % p === 0) { f.push(p); N /= p; }
+        if (N > 1) f.push(N);
+        return f;
+    };
+
+    FIGS.dimprime = (fig) => {
+        const STRIP = 64;
+        let N = 24, dim = 3;
+        const s = surface(fig, draw);
+        const ro = readout(fig);
+
+        // split the prime factors into `dim` groups with balanced products; extra sides are 1
+        function sides() {
+            const f = factorize(N).sort((a, b) => b - a);
+            const g = new Array(dim).fill(1);
+            f.forEach((p, i) => {
+                if (i < dim) { g[i] *= p; return; }
+                let j = 0;
+                for (let k = 1; k < dim; k++) if (g[k] < g[j]) j = k;
+                g[j] *= p;
+            });
+            return g.sort((a, b) => b - a);
+        }
+
+        function box(ctx, p, ox, oy, a, b, c, u, col, flat) {
+            // isometric box a × b × c of unit cubes, size u, front-bottom corner at (ox, oy)
+            const ix = (x, y, z) => ox + (x - y) * u * 0.87;
+            const iy = (x, y, z) => oy - z * u + (x + y) * u * 0.5 - (a + b) * u * 0.5;
+            const face = (pts, alpha) => {
+                ctx.beginPath();
+                pts.forEach(([x, y, z], i) => (i ? ctx.lineTo(ix(x, y, z), iy(x, y, z)) : ctx.moveTo(ix(x, y, z), iy(x, y, z))));
+                ctx.closePath();
+                ctx.globalAlpha = alpha; ctx.fillStyle = col; ctx.fill();
+                ctx.globalAlpha = 1; ctx.strokeStyle = flat ? p.c2 : p.ink; ctx.lineWidth = 1.1; ctx.stroke();
+            };
+            face([[0, 0, c], [a, 0, c], [a, b, c], [0, b, c]], 0.32);
+            face([[a, 0, 0], [a, b, 0], [a, b, c], [a, 0, c]], 0.18);
+            face([[0, b, 0], [a, b, 0], [a, b, c], [0, b, c]], 0.08);
+            ctx.globalAlpha = 0.35; ctx.strokeStyle = p.ink; ctx.lineWidth = 0.6;
+            const line = (A, B) => { ctx.beginPath(); ctx.moveTo(ix(...A), iy(...A)); ctx.lineTo(ix(...B), iy(...B)); ctx.stroke(); };
+            if (a * b * c <= 4096) {
+                for (let i = 1; i < a; i++) { line([i, 0, c], [i, b, c]); line([i, b, 0], [i, b, c]); }
+                for (let j = 1; j < b; j++) { line([0, j, c], [a, j, c]); line([a, j, 0], [a, j, c]); }
+                for (let k = 1; k < c; k++) { line([a, 0, k], [a, b, k]); line([0, b, k], [a, b, k]); }
+            }
+            ctx.globalAlpha = 1;
+        }
+
+        function draw({ ctx, w, h, p }) {
+            const om = factorize(N).length;
+            const g = sides();
+            const genuine = dim <= om;
+            const topH = h * 0.62;
+
+            // --- the box ---
+            const [a, b, c] = [g[0], g[1] ?? 1, g[2] ?? 1];
+            const copies = g.slice(3).reduce((m, v) => m * v, 1);
+            const showCopies = Math.min(copies, 12);
+            const cols = Math.min(showCopies, 4), rows = Math.ceil(showCopies / cols);
+            const cw = (w - 40) / cols, chh = (topH - 46) / rows;
+            const isoW = (a + b) * 0.87, isoH = c + (a + b) * 0.5;
+            const u = Math.max(1.2, Math.min(cw / (isoW + 0.6), chh / (isoH + 0.4), 26));
+            for (let k = 0; k < showCopies; k++) {
+                // centre the box's isometric bounding box in its cell
+                const cx = 20 + (k % cols) * cw + cw / 2;
+                const cy = 34 + Math.floor(k / cols) * chh + chh / 2;
+                const ox = cx - ((a - b) * 0.87 * u) / 2;
+                const oy = cy + (isoH * u) / 2;
+                box(ctx, p, ox, oy, a, b, c, u, genuine ? p.c : p.c2, !genuine);
+            }
+            const sideStr = g.join(" × ");
+            text(ctx, `${N} = ${sideStr}`, 14, 20, { font: `13px ${p.mono}`, color: p.ink });
+            text(ctx, genuine ? `genuine ${dim}-D box` : `collapses: ${dim - om} side${dim - om > 1 ? "s" : ""} = 1`, w - 14, 20,
+                { font: `12px ${p.sans}`, color: genuine ? p.c : p.c2, align: "right" });
+            if (copies > 1) text(ctx, `dims 4…${dim} = ${copies} stacked 3-D boxes${copies > showCopies ? ` (first ${showCopies} shown)` : ""}`, 14, topH - 6, { font: `11px ${p.sans}`, color: p.ink3 });
+
+            // --- the hierarchy strip: Ω(k) for k = 1..64, threshold line at n ---
+            const y0 = topH + 14, y1 = h - 22, bw = (w - 28) / STRIP;
+            const maxO = 6, unit = (y1 - y0) / maxO;
+            let hover = null;
+            for (let k = 1; k <= STRIP; k++) {
+                const o = k === 1 ? 0 : factorize(k).length;
+                const x = 14 + (k - 1) * bw;
+                const inD = o >= dim;
+                ctx.fillStyle = inD ? p.c : p.ink3;
+                ctx.globalAlpha = k === N ? 1 : inD ? 0.7 : 0.3;
+                ctx.fillRect(x + 1, y1 - o * unit, bw - 2, o * unit);
+                ctx.globalAlpha = 1;
+                if ((k & (k - 1)) === 0) {
+                    ctx.strokeStyle = p.ink; ctx.lineWidth = 1;
+                    ctx.strokeRect(x + 0.5, y1 - o * unit - 0.5, bw - 1, o * unit + 1);
+                }
+                if (k === N) text(ctx, "▲", x + bw / 2, y1 + 13, { font: `10px ${p.sans}`, color: p.ink, align: "center" });
+                if (s.mouse && s.mouse.x >= x && s.mouse.x < x + bw && s.mouse.y > y0 - 6) hover = { k, o };
+            }
+            ctx.strokeStyle = p.c; ctx.setLineDash([4, 3]); ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(14, y1 - dim * unit); ctx.lineTo(w - 14, y1 - dim * unit); ctx.stroke();
+            ctx.setLineDash([]);
+            text(ctx, `Ω ≥ ${dim}: D${"₀₁₂₃₄₅₆₇"[dim]}`, 16, y1 - dim * unit - 4, { font: `11px ${p.mono}`, color: p.c });
+            if (hover) tooltip(s, [`${hover.k} = ${hover.k === 1 ? "1" : factorize(hover.k).join("·")}`, `Ω = ${hover.o}  ${hover.o >= dim ? `∈ D${dim}` : `${dim}-dimensionally prime`}`, "click to draw it"]);
+            ro.textContent = `Ω(${N}) = ${om} · smallest in D${dim} is 2${"⁰¹²³⁴⁵⁶⁷"[dim]} = ${2 ** dim}`;
+        }
+
+        const nIn = Object.assign(document.createElement("input"), { type: "number", value: N, min: 2, max: 4096 });
+        nIn.setAttribute("aria-label", "N");
+        const lab = document.createElement("label");
+        lab.append("N =", nIn);
+        bar(fig).append(lab);
+        nIn.addEventListener("input", () => { const v = Math.max(2, Math.min(4096, Math.floor(+nIn.value) || 2)); N = v; s.redraw(); });
+        slider(fig, "dimension n", { min: 1, max: 6, value: dim }, (v) => { dim = v; s.redraw(); });
+        bar(fig).append(ro);
+        s.onclick = (m) => {
+            const bw = (s.w - 28) / STRIP;
+            if (m.y < s.h * 0.62) return;
+            const k = Math.floor((m.x - 14) / bw) + 1;
+            if (k >= 2 && k <= STRIP) { N = k; nIn.value = k; s.redraw(); }
+        };
+        s.redraw();
+    };
+
+    // ---------- LabourVala: contractor ↔ worker matching ----------
+    FIGS.labour = (fig) => {
+        let workers = [], phase = "idle", t = 0, need = 3, radius = 0.45, jobs = 0;
+        const s = surface(fig, draw);
+        const ro = readout(fig);
+        const site = { x: 0.5, y: 0.52 };
+        function seed() {
+            workers = Array.from({ length: 34 }, () => ({
+                x: 0.06 + Math.random() * 0.88, y: 0.12 + Math.random() * 0.8,
+                rating: 3 + Math.random() * 2, state: "idle",
+            }));
+        }
+        const dist = (w) => Math.hypot((w.x - site.x) * 1.6, w.y - site.y);
+        function post() {
+            workers.forEach((w) => (w.state = "idle"));
+            const near = workers.filter((w) => dist(w) < radius).sort(() => Math.random() - 0.5);
+            near.forEach((w, i) => (w.state = "notified"));
+            phase = "notify"; t = 0;
+            anim.start();
+        }
+        function step(dt) {
+            t += dt;
+            const near = workers.filter((w) => w.state !== "idle");
+            if (phase === "notify" && t > 700) {
+                near.forEach((w) => { if (Math.random() < 0.75) w.state = "applied"; });
+                phase = "apply"; t = 0;
+            } else if (phase === "apply" && t > 900) {
+                workers.filter((w) => w.state === "applied").sort((a, b) => b.rating - a.rating)
+                    .slice(0, need).forEach((w) => (w.state = "matched"));
+                phase = "match"; t = 0;
+            } else if (phase === "match" && t > 1100) {
+                workers.filter((w) => w.state === "matched").forEach((w) => (w.state = "arrived"));
+                phase = "arrive"; t = 0; jobs++;
+            } else if (phase === "arrive" && t > 1600) {
+                phase = "done";
+            }
+        }
+        function draw({ ctx, w, h, p }) {
+            const X = (v) => v * w, Y = (v) => v * h;
+            ctx.strokeStyle = p.rule; ctx.setLineDash([3, 4]);
+            ctx.beginPath(); ctx.ellipse(X(site.x), Y(site.y), (radius / 1.6) * w, radius * h, 0, 0, 7); ctx.stroke();
+            ctx.setLineDash([]);
+            for (const wk of workers) {
+                const x = X(wk.x), y = Y(wk.y);
+                if (["applied", "matched", "arrived"].includes(wk.state)) {
+                    ctx.strokeStyle = wk.state === "applied" ? p.c3 : p.c;
+                    ctx.setLineDash(wk.state === "applied" ? [2, 3] : []);
+                    ctx.lineWidth = wk.state === "applied" ? 1 : 1.8;
+                    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(X(site.x), Y(site.y)); ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+                const col = wk.state === "idle" ? p.ink3 : wk.state === "notified" || wk.state === "applied" ? p.c3 : p.c;
+                ctx.fillStyle = col;
+                ctx.globalAlpha = wk.state === "idle" ? 0.45 : 1;
+                ctx.beginPath(); ctx.arc(x, y, wk.state === "idle" ? 4 : 5.5, 0, 7); ctx.fill();
+                ctx.globalAlpha = 1;
+                if (wk.state === "matched") text(ctx, "📞", x + 7, y - 6, { font: `11px ${p.sans}` });
+                if (wk.state === "arrived") text(ctx, "✓", x + 8, y - 6, { font: `bold 12px ${p.sans}`, color: p.c });
+            }
+            ctx.fillStyle = p.paper; ctx.strokeStyle = p.ink; ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.roundRect(X(site.x) - 44, Y(site.y) - 13, 88, 26, 4); ctx.fill(); ctx.stroke();
+            text(ctx, "contractor", X(site.x), Y(site.y) + 1, { font: `11px ${p.sans}`, color: p.ink, align: "center", base: "middle" });
+            const msg = {
+                idle: "Post a job: the contractor sets the work, date and daily rate.",
+                notify: "Verified workers nearby see the job. Phone numbers stay hidden.",
+                apply: "Workers apply (dashed). Contact is still hidden.",
+                match: `Contractor accepts ${need}: only now are numbers revealed.`,
+                arrive: "Each worker confirms arrival on site with a 4-digit code.",
+                done: "Both sides rate each other, which builds their trust scores.",
+            }[phase];
+            text(ctx, msg, 12, h - 12, { font: `12px ${p.sans}`, color: p.ink2 });
+            ro.textContent = `${jobs} job${jobs === 1 ? "" : "s"} filled`;
+        }
+        const anim = animator(fig, (dt) => { step(dt); s.redraw(); return phase !== "done"; });
+        button(fig, "post a job", post);
+        slider(fig, "workers needed", { min: 1, max: 6, value: need }, (v) => (need = v));
+        slider(fig, "radius", { min: 0.2, max: 0.7, step: 0.05, value: radius, fmt: (v) => `${Math.round(v * 20)} km` }, (v) => { radius = v; s.redraw(); });
+        bar(fig).append(ro);
+        s.onclick = () => { if (phase === "idle" || phase === "done") post(); };
+        seed();
+        s.redraw();
+        if (!REDUCED) post(); // plays once when it scrolls into view
     };
 
     // ---------- boot ----------
