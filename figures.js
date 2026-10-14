@@ -976,7 +976,7 @@
     FIGS.bash = (fig) => {
         const term = fig.querySelector(".term");
         const FILES = {
-            "about.txt": "Aadesh Tikhe: number theory, algorithms, interpretability.\nBCA, Amity University Mumbai (2023–2026).",
+            "about.txt": "Aadesh Tikhe: number theory, algorithms, interpretability.\nMCA, SPIT Mumbai. BCA, Amity University Mumbai.",
             "c2.txt": "Every prime p > 2 is 2q ± r with q, r ∈ {1} ∪ primes, q < p.\nVerified for 1,008,309,544 primes. 0 counterexamples.",
             ".bashrc": "alias ll='ls -lah'\nalias gs='git status'\nexport EDITOR=vim",
             "crontab": "0 9 1 * * brew update && brew upgrade  # monthly Homebrew refresh",
