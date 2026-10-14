@@ -4,10 +4,10 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Research · Aadesh Tikhe</title>
-        <meta name="description" content="Preprints by Aadesh Tikhe on recursive prime decomposition, floor/ceiling products on squares, Pascal-type transforms and spatial probability — each with an interactive figure." />
-        <link rel="stylesheet" href="styles.css" />
+        <meta name="description" content="Preprints by Aadesh Tikhe on recursive prime decomposition, floor/ceiling products on squares, Pascal-type transforms and spatial probability, each with an interactive figure." />
+        <link rel="stylesheet" href="styles.css?v=7a4e8bd9" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
-        <script src="script.js"></script>
+        <script src="script.js?v=23d90e22"></script>
     </head>
     <body>
         <header class="site-header">
@@ -30,44 +30,9 @@
                 <h1>Research</h1>
                 <p>
                     Preprints and ongoing work, newest first. Every paper comes with a
-                    figure you can play with — drag the sliders, hover the plots.
+                    figure you can play with. Drag the sliders, hover the plots.
                 </p>
             </div>
-
-            <!-- Dimensional primality -->
-            <article class="entry t-dim" id="dimensional-primality">
-                <div>
-                    <span class="status">Preprint</span><span class="kicker">2026</span>
-                    <h3>Dimensional Primality: A Geometric Hierarchy of Integers via Discrete Hyper-Rectangles</h3>
-                    <p class="meta">Zenodo · <a href="https://doi.org/10.5281/zenodo.20645595">10.5281/zenodo.20645595</a></p>
-                    <p>
-                        Treat $N$ as the volume of a box whose integer sides are all
-                        greater than 1. The highest dimension in which $N$ can be built as
-                        such a <em>genuine</em> hyper-rectangle is exactly $\Omega(N)$, the
-                        number of its prime factors counted with multiplicity.
-                    </p>
-                    <ul>
-                        <li>A strictly nested hierarchy $D_1 \supsetneq D_2 \supsetneq D_3 \supsetneq\cdots$ with $D_n=\{N:\Omega(N)\ge n\}$ and $\bigcap_n D_n=\varnothing$.</li>
-                        <li><em>$n$-dimensional primes</em> are the integers outside $D_n$: $1$ together with the $k$-almost primes for $k\le n-1$. The case $n=2$ gives back the ordinary primes.</li>
-                        <li>Forced collapse: written in more than $\Omega(N)$ dimensions, at least $n-\Omega(N)$ sides must equal $1$.</li>
-                        <li>The smallest member of $D_n$ is $2^n$, reached only by the cube $(2,\dots,2)$ — the point where each new dimension first becomes possible.</li>
-                    </ul>
-                    <div class="actions">
-                        <a class="btn" href="https://doi.org/10.5281/zenodo.20645595">Preprint</a>
-                        <a class="btn" href="Discrete_Hyper_Rectangles.pdf">PDF</a>
-                    </div>
-                </div>
-                <figure class="fig tall" data-fig="dimprime">
-                    <canvas aria-label="An integer drawn as a hyper-rectangle, with the Omega hierarchy below"></canvas>
-                    <figcaption>
-                        <b>Figure 1.</b> Top: $N$ built as an $n$-dimensional box (dimensions
-                        above 3 appear as stacked copies). Raise $n$ past $\Omega(N)$ and the box
-                        collapses: sides of $1$ appear. Bottom: $\Omega(k)$ for $k\le 64$; bars
-                        above the dashed line are in $D_n$, outlined bars are the thresholds
-                        $2^n$. Click a bar to draw that number.
-                    </figcaption>
-                </figure>
-            </article>
 
             <!-- C2 -->
             <article class="entry t-prime" id="c2">
@@ -82,9 +47,9 @@
                         prime unfolds into a binary tree whose leaves are all $1$.
                     </p>
                     <ul>
-                        <li>Stronger <em>C2-Additive</em> form: $p = 2q + r$ with $q &lt; p/2$ — one canonical tree, no ± ambiguity.</li>
+                        <li>Stronger <em>C2-Additive</em> form: $p = 2q + r$ with $q &lt; p/2$, giving one canonical tree, no ± ambiguity.</li>
                         <li>Strictly stronger than Lemoine's conjecture (1895) on the primes: proving C2 gives Lemoine for primes as a corollary.</li>
-                        <li>Verified for all <strong>1,008,309,544 primes</strong> (up to ≈ 2·10¹⁰) with zero counterexamples — a two-stage CUDA pipeline on an RTX 5070 at ≈150M primes/s.</li>
+                        <li>Verified for all <strong>1,008,309,544 primes</strong> (up to ≈ 2·10¹⁰) with zero counterexamples, using a two-stage CUDA pipeline on an RTX 5070 at ≈150M primes/s.</li>
                         <li>Open question: does iterating $2q + r$ from $S_0=\{1,2\}$ generate <em>exactly</em> the primes? If so, it is a definition of primality that doesn't go through factorisation.</li>
                     </ul>
                     <p class="quote">Paul Lockhart (<i>A Mathematician's Lament</i>) judged it “possibly even more difficult” than classical problems such as $p = n^2+1$.</p>
@@ -96,7 +61,7 @@
                 <figure class="fig tall" data-fig="c2">
                     <canvas aria-label="Decomposition tree of a prime"></canvas>
                     <figcaption>
-                        <b>Figure 2.</b> The decomposition tree of any prime. Solid edges go
+                        <b>Figure 1.</b> The decomposition tree of any prime. Solid edges go
                         to $q$ (doubled), dashed edges to $r$. Type a prime or roll a random
                         one; hover a node to see its equation.
                     </figcaption>
@@ -120,7 +85,7 @@
                         $4\mid\mu$ or $\mu=1$.
                     </p>
                     <ul>
-                        <li>Every non-multiple of 4 reduces to $\mu=2$ — a floor/ceiling encoding of the Wallis product — by residual cancellation.</li>
+                        <li>Every non-multiple of 4 reduces to $\mu=2$ (a floor/ceiling encoding of the Wallis product) by residual cancellation.</li>
                         <li>OEIS correspondences, e.g. $\mu=2$: A052928, A007590, A000982, A063196; $\mu=4$: A008619, A002620, A004652, A161239.</li>
                     </ul>
                     <p class="quote">Simon Plouffe called it “an interesting topic” and “not trivial”, forwarded it to Jean-Paul Allouche (CNRS) and offered an arXiv endorsement.</p>
@@ -132,7 +97,7 @@
                 <figure class="fig" data-fig="dsrs">
                     <canvas aria-label="Partial products of the DSRS product"></canvas>
                     <figcaption>
-                        <b>Figure 3.</b> Partial products $P_N(\mu)$ for $N$ up to $4\cdot10^4$,
+                        <b>Figure 2.</b> Partial products $P_N(\mu)$ for $N$ up to $4\cdot10^4$,
                         computed live in your browser. Slide $\mu$ through a multiple of 4 and
                         watch the limit jump from $\pi/2$ to $1$.
                     </figcaption>
@@ -152,7 +117,7 @@
                         Fibonacci number as the target.
                     </p>
                     <ul>
-                        <li>Six complete enumeration strategies with CUDA acceleration — exhaustive up to $3^{22}$ (31.4 billion) combinations.</li>
+                        <li>Six complete enumeration strategies with CUDA acceleration, exhaustive up to $3^{22}$ (31.4 billion) combinations.</li>
                         <li>A greedy $O(n)$ heuristic for the $O(3^n)$ space, built on palindromic symmetry and centre-dominance.</li>
                         <li>I have since found cases where the greedy rule fails; I'm now working out exactly when it holds.</li>
                     </ul>
@@ -164,7 +129,7 @@
                 <figure class="fig" data-fig="pascalfib">
                     <canvas aria-label="Pascal row with ternary coefficients summing to a Fibonacci number"></canvas>
                     <figcaption>
-                        <b>Figure 4.</b> Brute force over all $3^n$ sign choices, run in your
+                        <b>Figure 3.</b> Brute force over all $3^n$ sign choices, run in your
                         browser. <span style="color: var(--c)">+1</span> adds an entry,
                         <span style="color: var(--c2)">−1</span> subtracts it, 0 skips it. Step
                         through every solution.
@@ -184,8 +149,8 @@
                         triangle; higher layers keep a Pascal-like organisation.
                     </p>
                     <ul>
-                        <li>A closed-form generator $C_{p,\ell}(v)$ produces single coefficients directly — no expansion, no Stirling-basis change — with $O(\ell)$ access when $p\gg\ell$.</li>
-                        <li>Unifies five OEIS sequences — A259569 (my own closed form), A001117, A000918, A000919, A000920 — as fixed-layer projections of one structure.</li>
+                        <li>A closed-form generator $C_{p,\ell}(v)$ produces single coefficients directly (no expansion, no Stirling-basis change), with $O(\ell)$ access when $p\gg\ell$.</li>
+                        <li>Unifies five OEIS sequences (A259569, my own closed form, plus A001117, A000918, A000919, A000920) as fixed-layer projections of one structure.</li>
                         <li>Connects to Voigt (1901, <i>Konformanten</i>) and Piza (1947, <i>D-coefficients</i>), whose values appear in layers 2 and 3 but were never organised or unified.</li>
                     </ul>
                     <div class="actions">
@@ -196,9 +161,9 @@
                 <figure class="fig tall" data-fig="layers">
                     <canvas aria-label="Layered Pascal transform triangle"></canvas>
                     <figcaption>
-                        <b>Figure 5.</b> Coefficients of $\Delta^{\ell}(x^p)$ (layer 0: $(x+1)^p$), highest power
+                        <b>Figure 4.</b> Coefficients of $\Delta^{\ell}(x^p)$ (layer 0: $(x+1)^p$), highest power
                         first, computed exactly with BigInt. Raise $\ell$: the constant
-                        terms (red) become $\ell!\,S(p,\ell)$ — the OEIS sequences named in
+                        terms (red) become $\ell!\,S(p,\ell)$, the OEIS sequences named in
                         the readout. Hover any cell.
                     </figcaption>
                 </figure>
@@ -228,7 +193,7 @@
                 <figure class="fig" data-fig="polytope">
                     <canvas aria-label="Monte Carlo points in a regular polygon"></canvas>
                     <figcaption>
-                        <b>Figure 6.</b> Monte Carlo: coloured points are nearer the centroid
+                        <b>Figure 5.</b> Monte Carlo: coloured points are nearer the centroid
                         than any edge. The “exact” value is the area under the $n$ parabolic arcs,
                         $\frac{t+t^3/3}{2\tan(\pi/n)}$ with $t=\tan\frac{\pi}{2n}$, which tends
                         to $1/4$ (the disc) as $n\to\infty$.
@@ -236,9 +201,44 @@
                 </figure>
             </article>
 
+            <!-- Dimensional primality -->
+            <article class="entry t-dim" id="dimensional-primality">
+                <div>
+                    <span class="status">Working paper</span><span class="kicker">In progress</span>
+                    <h3>Dimensional Primality: A Geometric Hierarchy of Integers via Discrete Hyper-Rectangles</h3>
+                    <p class="meta">Draft on Zenodo · <a href="https://doi.org/10.5281/zenodo.20645595">10.5281/zenodo.20645595</a></p>
+                    <p>
+                        Treat $N$ as the volume of a box whose integer sides are all
+                        greater than 1. The highest dimension in which $N$ can be built as
+                        such a <em>genuine</em> hyper-rectangle is exactly $\Omega(N)$, the
+                        number of its prime factors counted with multiplicity.
+                    </p>
+                    <ul>
+                        <li>A strictly nested hierarchy $D_1 \supsetneq D_2 \supsetneq D_3 \supsetneq\cdots$ with $D_n=\{N:\Omega(N)\ge n\}$ and $\bigcap_n D_n=\varnothing$.</li>
+                        <li><em>$n$-dimensional primes</em> are the integers outside $D_n$: $1$ together with the $k$-almost primes for $k\le n-1$. The case $n=2$ gives back the ordinary primes.</li>
+                        <li>Forced collapse: written in more than $\Omega(N)$ dimensions, at least $n-\Omega(N)$ sides must equal $1$.</li>
+                        <li>The smallest member of $D_n$ is $2^n$, reached only by the cube $(2,\dots,2)$, the point where each new dimension first becomes possible.</li>
+                    </ul>
+                    <div class="actions">
+                        <a class="btn" href="https://doi.org/10.5281/zenodo.20645595">Preprint</a>
+                        <a class="btn" href="Discrete_Hyper_Rectangles.pdf">PDF</a>
+                    </div>
+                </div>
+                <figure class="fig tall" data-fig="dimprime">
+                    <canvas aria-label="An integer drawn as a hyper-rectangle, with the Omega hierarchy below"></canvas>
+                    <figcaption>
+                        <b>Figure 6.</b> Top: $N$ built as an $n$-dimensional box (dimensions
+                        above 3 appear as stacked copies). Raise $n$ past $\Omega(N)$ and the box
+                        collapses: sides of $1$ appear. Bottom: $\Omega(k)$ for $k\le 64$; bars
+                        above the dashed line are in $D_n$, outlined bars are the thresholds
+                        $2^n$. Click a bar to draw that number.
+                    </figcaption>
+                </figure>
+            </article>
+
             <h2>Expository writing</h2>
             <ul class="news">
-                <li><time>Dec 2025</time><span><a href="escaping-the-killer.html">Escaping the Killer by Always Getting Closer</a> — a greedy rule that can walk forever (interactive essay + <a href="Escaping_the_Killer_by_Always_Getting_Closer.pdf">PDF</a>).</span></li>
+                <li><time>Dec 2025</time><span><a href="escaping-the-killer.html">Escaping the Killer by Always Getting Closer</a>: a greedy rule that can walk forever (interactive essay + <a href="Escaping_the_Killer_by_Always_Getting_Closer.pdf">PDF</a>).</span></li>
                 <li><time>2024–25</time><span><a href="writing.html#lucas">Efficient Fibonacci computation: Édouard Lucas's Pascal-triangle method</a> (Medium).</span></li>
             </ul>
         </main>
@@ -249,7 +249,7 @@
                 <span>Last updated October 2026</span>
             </div>
         </footer>
-        <script src="figures.js"></script>
+        <script src="figures.js?v=36093dd5"></script>
         <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
         <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
     </body>
