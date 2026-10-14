@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Certificates · Aadesh Tikhe</title>
         <meta name="description" content="Certificates earned by Aadesh Tikhe: NPTEL Discrete Mathematics (IIT Madras) and Theory of Computation (IIT Hyderabad), the Machine Learning Specialization, Lean Six Sigma and TEDxYouth." />
-        <link rel="stylesheet" href="styles.css?v=7a4e8bd9" />
+        <link rel="stylesheet" href="styles.css?v=f5b9d873" />
         <script src="script.js?v=23d90e22"></script>
     </head>
     <body>
@@ -27,7 +27,7 @@
         <main>
             <div class="page-head">
                 <h1>Certificates</h1>
-                <p>Courses and recognitions. Hover a certificate to tilt it, click to view it full size, and use the arrows (or ← →) to turn the page.</p>
+                <p>Courses and recognitions. Hover a certificate to tilt it, and click it to view it full size.</p>
             </div>
 
             <div class="cert-filters" role="group" aria-label="Filter certificates">
@@ -37,7 +37,7 @@
                 <button class="chip" type="button" data-filter="event">Events</button>
             </div>
 
-            <div class="cert-page" id="certPage" aria-live="polite">
+            <div class="cert-page" id="certPage">
                 <div class="cert-row" data-tags="nptel course">
                     <button class="cert-card" type="button" data-full="certificates/thumbs/nptel-discrete-mathematics-2026.jpg" data-src="certificates/nptel-discrete-mathematics-2026.pdf" aria-label="View the Discrete Mathematics certificate">
                         <span class="tilt"><img src="certificates/thumbs/nptel-discrete-mathematics-2026.jpg" alt="NPTEL Elite certificate in Discrete Mathematics" loading="lazy" /><span class="glare"></span></span>
@@ -107,13 +107,6 @@
                 </div>
             </div>
 
-            <div class="cert-nav" hidden>
-                <button class="arrow" type="button" data-step="-1" aria-label="Previous page">←</button>
-                <span class="dots"></span>
-                <button class="arrow" type="button" data-step="1" aria-label="Next page">→</button>
-                <span class="count"></span>
-            </div>
-
             <dialog class="viewer" aria-label="Certificate viewer">
                 <img alt="" />
                 <div class="bar"><a href="#" target="_blank" rel="noopener">Open original</a><button type="button">Close</button></div>
@@ -129,79 +122,29 @@
 
         <script>
             (() => {
-                const PER_PAGE = 2;
-                const page = document.getElementById("certPage");
-                const rows = [...page.querySelectorAll(".cert-row")];
-                const nav = document.querySelector(".cert-nav");
-                const dots = nav.querySelector(".dots");
-                const count = nav.querySelector(".count");
-                const [prev, next] = nav.querySelectorAll(".arrow");
+                const rows = [...document.querySelectorAll(".cert-row")];
                 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-                let filter = "all", current = 0;
 
-                const visible = () => rows.filter((r) => filter === "all" || r.dataset.tags.split(" ").includes(filter));
-                const pages = () => Math.max(1, Math.ceil(visible().length / PER_PAGE));
-
-                function show(i, dir = 0) {
-                    current = Math.max(0, Math.min(pages() - 1, i));
-                    const vis = visible();
-                    rows.forEach((r) => (r.hidden = true));
-                    vis.slice(current * PER_PAGE, current * PER_PAGE + PER_PAGE).forEach((r) => {
-                        r.hidden = false;
-                        r.querySelectorAll(".score").forEach((sc) => {
-                            const fill = sc.querySelector(".fill");
-                            fill.style.width = "0";
-                            requestAnimationFrame(() => requestAnimationFrame(() => (fill.style.width = sc.dataset.score + "%")));
-                        });
+                // score bars fill in when they scroll into view
+                const io = new IntersectionObserver((entries) => {
+                    entries.forEach((e) => {
+                        if (!e.isIntersecting) return;
+                        e.target.querySelector(".fill").style.width = e.target.dataset.score + "%";
+                        io.unobserve(e.target);
                     });
-                    if (dir && !reduced) {
-                        page.style.setProperty("--from", dir > 0 ? "28px" : "-28px");
-                        page.classList.remove("turning");
-                        void page.offsetWidth;
-                        page.classList.add("turning");
-                    }
-                    dots.innerHTML = "";
-                    for (let k = 0; k < pages(); k++) {
-                        const d = document.createElement("button");
-                        d.type = "button";
-                        d.setAttribute("aria-label", `Page ${k + 1}`);
-                        if (k === current) d.setAttribute("aria-current", "true");
-                        d.onclick = () => show(k, k - current);
-                        dots.append(d);
-                    }
-                    prev.disabled = current === 0;
-                    next.disabled = current === pages() - 1;
-                    count.textContent = `${current + 1} / ${pages()}`;
-                }
+                }, { threshold: 0.6 });
+                document.querySelectorAll(".score").forEach((sc) => io.observe(sc));
 
-                nav.hidden = false;
-                nav.addEventListener("click", (e) => {
-                    const b = e.target.closest(".arrow");
-                    if (b) show(current + +b.dataset.step, +b.dataset.step);
-                });
-                document.addEventListener("keydown", (e) => {
-                    if (document.querySelector("dialog[open]")) return;
-                    if (e.key === "ArrowRight") show(current + 1, 1);
-                    if (e.key === "ArrowLeft") show(current - 1, -1);
-                });
-                let x0 = null;
-                page.addEventListener("touchstart", (e) => (x0 = e.touches[0].clientX), { passive: true });
-                page.addEventListener("touchend", (e) => {
-                    if (x0 === null) return;
-                    const dx = e.changedTouches[0].clientX - x0;
-                    if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
-                    x0 = null;
-                });
-
+                // filter chips
                 document.querySelectorAll(".chip").forEach((c) =>
                     c.addEventListener("click", () => {
                         document.querySelectorAll(".chip").forEach((o) => o.setAttribute("aria-pressed", String(o === c)));
-                        filter = c.dataset.filter;
-                        show(0, 1);
+                        const f = c.dataset.filter;
+                        rows.forEach((r) => (r.hidden = !(f === "all" || r.dataset.tags.split(" ").includes(f))));
                     }),
                 );
 
-                // 3-D tilt with a moving glare
+                // 3-D tilt with a moving glare, and a full-size viewer on click
                 const dlg = document.querySelector("dialog.viewer");
                 document.querySelectorAll(".cert-card").forEach((card) => {
                     const tilt = card.querySelector(".tilt");
@@ -229,8 +172,6 @@
                 });
                 dlg.querySelector("button").onclick = () => dlg.close();
                 dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
-
-                show(0);
             })();
         </script>
     </body>
