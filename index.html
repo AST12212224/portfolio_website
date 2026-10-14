@@ -2,135 +2,125 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Aadesh Tikhe - Home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Aadesh Tikhe</title>
+        <meta name="description" content="Aadesh Tikhe — independent researcher in number theory, combinatorics and computation. Preprints, interactive figures, projects and CV." />
         <link rel="stylesheet" href="styles.css" />
+        <script src="script.js"></script>
     </head>
     <body>
-        <div class="dot-matrix"></div>
-        <div class="scroll-progress"></div>
-
-        <nav>
-            <div class="logo">AADESH TIKHE</div>
-            <div class="menu-toggle" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
+        <header class="site-header">
+            <div class="inner">
+                <a class="site-name" href="index.html">Aadesh Tikhe</a>
+                <nav class="site-nav" aria-label="Main">
+                    <a href="index.html">Home</a>
+                    <a href="research.html">Research</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="writing.html">Writing</a>
+                    <a href="resume.html">CV</a>
+                </nav>
+                <button class="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
             </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="research.html">Research</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="lore.html">Lore</a></li>
-                <li><a href="certifications.html">Certifications</a></li>
-                <li><a href="content.html">Content</a></li>
-                <li><a href="resume.html">Resume</a></li>
-                <li><a href="contact.html">Contact</a></li>
+        </header>
+
+        <main>
+            <section class="intro">
+                <div class="prose">
+                    <h1>Aadesh Tikhe</h1>
+                    <p class="role">
+                        Independent researcher in number theory &amp; computation ·
+                        BCA, Amity University Mumbai (2023–2026) ·
+                        Chhatrapati Sambhajinagar, India
+                    </p>
+
+                    <p>
+                        I'm obsessively curious. I can't see a mathematical pattern
+                        without wanting to pull it apart and see if it connects to
+                        something else. My work mixes rigorous research — published on
+                        the <a href="https://oeis.org/wiki/User:Aadesh">OEIS</a>,
+                        archived on Zenodo, presented at the Indian Mathematical
+                        Society — with experimental code where I simply try things.
+                    </p>
+                    <p>
+                        Across four independent lines of research I keep using one
+                        method: take a classical discrete structure — Pascal's
+                        triangle, the perfect squares, the primes, a regular polygon —
+                        apply a difference or a floor/ceiling operation, and look for
+                        the hidden structure underneath.
+                    </p>
+                    <p>
+                        <strong>Goal.</strong> Advance interpretability in deep learning
+                        by bringing ideas from number theory and algorithmic analysis to
+                        neural-network behaviour, and build human-centred systems that
+                        make complexity easier to understand.
+                    </p>
+                    <p>
+                        <strong>Practice.</strong> Vipassana meditator — three ten-day
+                        silent residential courses completed, one served. It shapes how
+                        I approach long, deep-focus research.
+                    </p>
+
+                    <div class="links-row">
+                        <a href="mailto:aadeshtikhe24@gmail.com">Email</a>
+                        <a href="Aadesh_Resume.pdf">CV (PDF)</a>
+                        <a href="https://orcid.org/0009-0009-3185-0845">ORCID</a>
+                        <a href="https://github.com/AST12212224">GitHub</a>
+                        <a href="https://oeis.org/wiki/User:Aadesh">OEIS</a>
+                        <a href="https://linkedin.com/in/aadesh-tikhe">LinkedIn</a>
+                        <a href="https://medium.com/@aadeshtikhe24">Medium</a>
+                        <a href="https://youtube.com/@aadeshtikhe">YouTube</a>
+                    </div>
+                </div>
+
+                <aside class="intro-figure">
+                    <figure class="fig t-prime" data-fig="ulam">
+                        <canvas style="height: 300px" aria-label="Ulam spiral of primes; hover a prime to see its C2 decomposition"></canvas>
+                        <figcaption>
+                            <b>The primes on an Ulam spiral.</b> Hover any red dot to see
+                            its decomposition <i>p</i> = 2<i>q</i> ± <i>r</i> from the
+                            <a href="research.html#c2">C2 conjecture</a>.
+                        </figcaption>
+                    </figure>
+                </aside>
+            </section>
+
+            <h2>Research interests</h2>
+            <div class="interests">
+                <span class="tag">Additive number theory</span>
+                <span class="tag">Combinatorics &amp; finite differences</span>
+                <span class="tag">Integer sequences (OEIS)</span>
+                <span class="tag">Infinite products &amp; π</span>
+                <span class="tag">GPU-accelerated verification</span>
+                <span class="tag">LLM + symbolic reasoning</span>
+                <span class="tag">Interpretability</span>
+            </div>
+
+            <h2>News</h2>
+            <ul class="news">
+                <li><time>May 2026</time><span>Preprint: <a href="research.html#c2">A Recursive Prime Decomposition Conjecture (C2)</a> — verified for 1,008,309,544 primes with zero counterexamples.</span></li>
+                <li><time>May 2026</time><span>Finished <a href="projects.html#aideas">AIDEAS-OEIS</a>, my BCA capstone (scored 90/100): LLM + symbolic verification of 2,041 OEIS entries.</span></li>
+                <li><time>Apr 2026</time><span>NPTEL Discrete Mathematics (IIT/IISc) — 91/100, Elite certificate.</span></li>
+                <li><time>Dec 2025</time><span>New essay: <a href="escaping-the-killer.html">Escaping the Killer by Always Getting Closer</a>, with an interactive spiral.</span></li>
+                <li><time>Oct 2025</time><span>Preprint: <a href="research.html#pascal-fib">Fibonacci Numbers from Pascal Rows</a>.</span></li>
+                <li><time>2025</time><span>Simon Plouffe reviewed <a href="research.html#dsrs">DSRS</a> (“not trivial”) and forwarded it to Jean-Paul Allouche (CNRS).</span></li>
+                <li><time>Dec 2024</time><span>Talk at the Indian Mathematical Society Conference, MIT-WPU Pune: <a href="research.html#polytopes">Probability in Regular 2-Polytopes</a>.</span></li>
             </ul>
-        </nav>
 
-        <section id="hero">
-            <div class="hero-label">Mathematical Research & Development</div>
-            <h1 class="hero-title">
-                Building elegant systems<br />at the intersection of<br />math
-                and code
-            </h1>
-            <p class="hero-subtitle">
-                BCA Student at Amity University | Published Researcher | OEIS
-                Contributor | Exploring the deep connections between number
-                theory, algorithms, and AI
-            </p>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-number">3+</div>
-                    <div class="stat-label">Publications</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Projects</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">OEIS</div>
-                    <div class="stat-label">Contributor</div>
-                </div>
-            </div>
-            <div class="hero-cta">
-                <a href="research.html" class="cta-button">View Research</a>
-                <a href="contact.html" class="cta-button-secondary"
-                    >Get in Touch</a
-                >
-            </div>
-        </section>
+            <h2>Selected work</h2>
+            <ul class="news">
+                <li><time>Conjecture</time><span><a href="research.html#c2">C2: every prime unfolds into a binary tree of primes</a> — discussed at length with Paul Lockhart.</span></li>
+                <li><time>Framework</time><span><a href="research.html#layers">Layered Pascal Transform Triangles</a> — unifies five OEIS sequences under one generator.</span></li>
+                <li><time>Product</time><span><a href="research.html#dsrs">DSRS</a> — floor and ceiling on perfect squares give π/2 or 1, decided by μ mod 4.</span></li>
+                <li><time>System</time><span><a href="projects.html#aideas">AIDEAS-OEIS</a> — a three-verifier pipeline for checking OEIS formulas.</span></li>
+            </ul>
+        </main>
 
-        <section id="featured">
-            <div class="section-header">
-                <div class="section-label">Featured Work</div>
-                <h2 class="section-title">Latest Research</h2>
+        <footer class="site-footer">
+            <div class="inner">
+                <span>© 2026 Aadesh Tikhe · <a href="mailto:aadeshtikhe24@gmail.com">aadeshtikhe24@gmail.com</a></span>
+                <span>Last updated October 2026</span>
             </div>
-            <div class="featured-grid">
-                <div class="featured-card">
-                    <span class="research-tag">Published</span>
-                    <h3 class="research-title">
-                        Discrete Square Residual Structures
-                    </h3>
-                    <p class="research-desc">
-                        A purely arithmetic framework extracting π from floor
-                        and ceiling operations on perfect squares.
-                    </p>
-                    <a href="research.html" class="card-link">Read More →</a>
-                </div>
-                <div class="featured-card">
-                    <span class="research-tag">Conference</span>
-                    <h3 class="research-title">
-                        Probability in Regular 2-Polytopes
-                    </h3>
-                    <p class="research-desc">
-                        Presented at Indian Mathematical Society Conference at
-                        MIT-WPU, Pune.
-                    </p>
-                    <a href="research.html" class="card-link">Read More →</a>
-                </div>
-                <div class="featured-card">
-                    <span class="research-tag">In Progress</span>
-                    <h3 class="research-title">Fibonacci from Pascal Rows</h3>
-                    <p class="research-desc">
-                        CUDA GPU-accelerated algorithms with O(n) greedy
-                        solution for O(3ⁿ) problems.
-                    </p>
-                    <a href="research.html" class="card-link">Read More →</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="quick-links">
-            <div class="quick-links-grid">
-                <a href="projects.html" class="quick-link-card">
-                    <h3>Projects</h3>
-                    <p>
-                        Explore my coding projects and open-source contributions
-                    </p>
-                    <span class="link-arrow">→</span>
-                </a>
-                <a href="content.html" class="quick-link-card">
-                    <h3>Content</h3>
-                    <p>
-                        YouTube videos, blogs, and mathematical visualizations
-                    </p>
-                    <span class="link-arrow">→</span>
-                </a>
-                <a href="certifications.html" class="quick-link-card">
-                    <h3>Certifications</h3>
-                    <p>Professional certifications and specialized courses</p>
-                    <span class="link-arrow">→</span>
-                </a>
-                <a href="lore.html" class="quick-link-card">
-                    <h3>Lore</h3>
-                    <p>My journey, philosophy, and what drives me</p>
-                    <span class="link-arrow">→</span>
-                </a>
-            </div>
-        </section>
-
-        <script src="script.js"></script>
+        </footer>
+        <script src="figures.js"></script>
     </body>
 </html>

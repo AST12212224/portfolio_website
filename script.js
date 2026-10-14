@@ -1,62 +1,38 @@
-// Scroll progress
-window.addEventListener("scroll", () => {
-  const scrollProgress = document.querySelector(".scroll-progress");
-  const scrollTotal =
-    document.documentElement.scrollHeight - window.innerHeight;
-  const scrollPercentage = (window.scrollY / scrollTotal) * 100;
-  scrollProgress.style.width = scrollPercentage + "%";
-});
+// Theme toggle (remembers the reader's choice) and current-page marker.
+(() => {
+    const root = document.documentElement;
+    try {
+        const saved = localStorage.getItem("theme");
+        if (saved) root.dataset.theme = saved;
+    } catch (e) {}
 
-// Mobile menu toggle
-function toggleMenu() {
-  const navLinks = document.getElementById("navLinks");
-  navLinks.classList.toggle("active");
-}
+    const isDark = () =>
+        root.dataset.theme
+            ? root.dataset.theme === "dark"
+            : matchMedia("(prefers-color-scheme: dark)").matches;
 
-// Smooth scroll for anchor links
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+    document.addEventListener("DOMContentLoaded", () => {
+        const btn = document.querySelector(".theme-toggle");
+        const paint = () => {
+            if (!btn) return;
+            btn.textContent = isDark() ? "☀" : "☾";
+            btn.setAttribute("aria-label", isDark() ? "Switch to light theme" : "Switch to dark theme");
+        };
+        paint();
+        btn?.addEventListener("click", () => {
+            root.dataset.theme = isDark() ? "light" : "dark";
+            try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+            paint();
+            document.dispatchEvent(new Event("themechange"));
+        });
+        matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+            paint();
+            document.dispatchEvent(new Event("themechange"));
+        });
+
+        const page = location.pathname.split("/").pop() || "index.html";
+        document.querySelectorAll(".site-nav a").forEach((a) => {
+            if (a.getAttribute("href") === page) a.setAttribute("aria-current", "page");
+        });
     });
-  });
-
-  // Animate elements on scroll
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = "1";
-          entry.target.style.transform = "translateY(0)";
-        }
-      });
-    },
-    { threshold: 0.1 },
-  );
-
-  // Observe cards
-  document
-    .querySelectorAll(
-      ".featured-card, .quick-link-card, .content-card, .project-card, .research-card, .cert-item, .timeline-item",
-    )
-    .forEach((el) => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(30px)";
-      el.style.transition = "all 0.6s ease";
-      observer.observe(el);
-    });
-});
-
-// Set active nav link based on current page
-document.addEventListener("DOMContentLoaded", () => {
-  const currentPage = window.location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll(".nav-links a").forEach((link) => {
-    if (link.getAttribute("href") === currentPage) {
-      link.classList.add("active");
-    }
-  });
-});
+})();

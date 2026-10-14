@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Escaping the Killer · Aadesh Tikhe</title>
+        <meta name="description" content="An interactive essay: a path that gets closer at every step can still be arbitrarily — even infinitely — long. Archimedean spiral, closed-form arc length, and what it says about gradient descent." />
+        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="inner">
+                <a class="site-name" href="index.html">Aadesh Tikhe</a>
+                <nav class="site-nav" aria-label="Main">
+                    <a href="index.html">Home</a>
+                    <a href="research.html">Research</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="writing.html">Writing</a>
+                    <a href="resume.html">CV</a>
+                </nav>
+                <button class="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
+            </div>
+        </header>
+
+        <main>
+            <article class="essay t-killer">
+                <div class="page-head">
+                    <p class="kicker">Essay · December 2025</p>
+                    <h1>Escaping the Killer by Always Getting Closer</h1>
+                    <p>
+                        Aadesh Tikhe ·
+                        <a href="Escaping_the_Killer_by_Always_Getting_Closer.pdf">PDF</a> ·
+                        <a href="Escaping_the_Killer_by_Always_Getting_Closer.pdf" download>Download</a> ·
+                        <a href="https://www.desmos.com/calculator">Desmos</a>
+                    </p>
+                </div>
+
+                <p class="lede">
+                    A rule that improves things at every step can still never finish. The
+                    rule here: get closer to the target, every single step.
+                </p>
+
+                <h2>The setup</h2>
+                <p>
+                    You stand at point $B$. A killer starts at point $A$ and will kill you
+                    the moment he reaches $B$. He is dumb but perfectly obedient, and you get
+                    to program him with one rule: <em>after every step, he must be closer to
+                    you than he was before.</em> You also choose how much closer he gets each
+                    step, and in which direction he moves.
+                </p>
+                <p>
+                    The natural belief is that this rule guarantees your death: if he keeps
+                    getting closer, how can he not arrive? But that belief hides an
+                    assumption — that getting closer also limits how much useless movement
+                    is possible. So the real question is: <strong>can you force him to walk
+                    an enormous total distance, even an infinite one, while he gets closer at
+                    every step?</strong>
+                </p>
+
+                <h2>The exploit</h2>
+                <p>
+                    “Distance to $B$ must decrease” only says that each step lands inside the
+                    circle around $B$ through his current position. It limits his
+                    <em>radial</em> motion and says nothing about <em>tangential</em> motion.
+                    He can circle almost forever while the radius shrinks by tiny amounts.
+                    Displacement is the straight line from $A$ to $B$; total distance is the
+                    sum of every step, and a spiral can make the second as large as you like
+                    compared with the first.
+                </p>
+
+                <figure class="fig tall" data-fig="killer">
+                    <canvas aria-label="The killer walking an Archimedean spiral toward B"></canvas>
+                    <figcaption>
+                        <b>Figure 1.</b> The killer follows $r(\theta)=R-\dfrac{m\theta}{2\pi}$
+                        with $R=6$. His distance to you only ever shrinks, yet for small $m$
+                        the distance walked explodes. Shrink $m$ and press replay.
+                    </figcaption>
+                </figure>
+
+                <h2>The Archimedean spiral</h2>
+                <p>
+                    Take $r(\theta)=R-\dfrac{m\theta}{2\pi}$. As $\theta$ increases the radius
+                    strictly decreases, so the rule is never broken. He needs
+                    $N=R/m$ full turns to reach the centre, and each turn adds about one
+                    circumference of walking for only $m$ of real progress.
+                </p>
+                <p>The arc length from $\theta=0$ to $\theta=2\pi R/m$ is</p>
+                <div class="math-block">$$L=\int_0^{2\pi R/m}\sqrt{r^2+\left(\frac{dr}{d\theta}\right)^2}\,d\theta =\int_0^{2\pi R/m}\sqrt{\Bigl(R-\frac{m\theta}{2\pi}\Bigr)^2+\Bigl(\frac{m}{2\pi}\Bigr)^2}\,d\theta.$$</div>
+                <p>
+                    Substitute $u=R-\frac{m\theta}{2\pi}$, so $d\theta=-\frac{2\pi}{m}\,du$ and
+                    the limits run from $u=R$ to $u=0$. With $a=\frac{m}{2\pi}$,
+                </p>
+                <div class="math-block">$$L=\frac{2\pi}{m}\int_0^{R}\sqrt{u^2+a^2}\,du =\frac{2\pi}{m}\left[\frac{u}{2}\sqrt{u^2+a^2}+\frac{a^2}{2}\ln\Bigl|u+\sqrt{u^2+a^2}\Bigr|\right]_0^R.$$</div>
+                <p>Evaluating and simplifying gives the plug-and-play formula</p>
+                <div class="math-block">$$\boxed{L=\frac{\pi R^2}{m}\sqrt{1+\Bigl(\frac{m}{2\pi R}\Bigr)^2}+\frac{m}{4\pi}\ln\!\left(\frac{2\pi R}{m}\Bigl(1+\sqrt{1+\Bigl(\frac{m}{2\pi R}\Bigr)^2}\Bigr)\right)}$$</div>
+
+                <h2>Taking the limit</h2>
+                <p>
+                    As $m\to0^+$ the dominant term $\pi R^2/m$ grows without bound:
+                    $$\lim_{m\to0^+}\frac{\pi R^2}{m}=\infty.$$
+                    So the killer can be made to walk an arbitrarily long distance — in the
+                    limit, an infinite one — while always getting closer. The discrete
+                    picture is the harmonic series: if step $n$ moves him $1/n$ along the
+                    path while his distance to you still falls, then $\sum 1/n$ diverges.
+                </p>
+
+                <figure class="fig" data-fig="killerplot">
+                    <canvas aria-label="Arc length L against m on log-log axes"></canvas>
+                    <figcaption>
+                        <b>Figure 2.</b> $L$ against $m$ for $R=6$ on log–log axes; the line
+                        has slope $-1$. Hollow points are the rows of the table below.
+                    </figcaption>
+                </figure>
+
+                <table class="data">
+                    <thead><tr><th>R</th><th>m</th><th>m / 2πR</th><th>√(1 + (m/2πR)²)</th><th>L</th></tr></thead>
+                    <tbody>
+                        <tr><td>6</td><td>1</td><td>0.02653</td><td>1.000352</td><td>113.4811</td></tr>
+                        <tr><td>6</td><td>0.8</td><td>0.02122</td><td>1.000225</td><td>141.6929</td></tr>
+                        <tr><td>6</td><td>0.5</td><td>0.01326</td><td>1.000088</td><td>226.4144</td></tr>
+                        <tr><td>6</td><td>0.2</td><td>0.00531</td><td>1.000014</td><td>565.5890</td></tr>
+                        <tr><td>6</td><td>0.1</td><td>0.00265</td><td>1.000004</td><td>1131.0301</td></tr>
+                        <tr><td>6</td><td>0.05</td><td>0.00133</td><td>1.000001</td><td>2261.9778</td></tr>
+                        <tr><td>6</td><td>0.001</td><td>0.00003</td><td>1.000000</td><td>113097.3365</td></tr>
+                    </tbody>
+                </table>
+
+                <h2>Why this matters</h2>
+                <ul style="margin-left: 1.2rem">
+                    <li><strong>A local rule is not a global result.</strong> A rule that seems to guarantee the goal (getting closer) does not guarantee reaching it in finite time or distance.</li>
+                    <li><strong>Poorly specified objectives.</strong> An optimiser that “always moves closer” sounds safe, but unless its path complexity is bounded it can be arbitrarily inefficient. Gradient descent with a badly tuned learning rate does exactly this: it improves every step and still takes an impractically long route.</li>
+                    <li><strong>The power of direction.</strong> Rotation allows almost unlimited movement inside a small, finite region.</li>
+                </ul>
+
+                <h2>The original paper</h2>
+                <p>The essay as typeset in December 2025.</p>
+                <object class="pdf-frame" data="Escaping_the_Killer_by_Always_Getting_Closer.pdf" type="application/pdf" aria-label="Escaping the Killer PDF">
+                    <p>
+                        Your browser can't display PDFs inline —
+                        <a href="Escaping_the_Killer_by_Always_Getting_Closer.pdf">open the PDF</a>.
+                    </p>
+                </object>
+            </article>
+        </main>
+
+        <footer class="site-footer">
+            <div class="inner">
+                <span>© 2026 Aadesh Tikhe · <a href="mailto:aadeshtikhe24@gmail.com">aadeshtikhe24@gmail.com</a></span>
+                <span>Last updated October 2026</span>
+            </div>
+        </footer>
+        <script src="figures.js"></script>
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+    </body>
+</html>

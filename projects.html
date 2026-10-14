@@ -2,347 +2,178 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Projects - Aadesh Tikhe</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Projects · Aadesh Tikhe</title>
+        <meta name="description" content="Software projects by Aadesh Tikhe: AIDEAS-OEIS, OEIS contributions, Manim animations, a Django agro platform and more." />
         <link rel="stylesheet" href="styles.css" />
+        <script src="script.js"></script>
     </head>
     <body>
-        <div class="dot-matrix"></div>
-        <div class="scroll-progress"></div>
-
-        <nav>
-            <div class="logo">AADESH TIKHE</div>
-            <div class="menu-toggle" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
+        <header class="site-header">
+            <div class="inner">
+                <a class="site-name" href="index.html">Aadesh Tikhe</a>
+                <nav class="site-nav" aria-label="Main">
+                    <a href="index.html">Home</a>
+                    <a href="research.html">Research</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="writing.html">Writing</a>
+                    <a href="resume.html">CV</a>
+                </nav>
+                <button class="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
             </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="research.html">Research</a></li>
-                <li><a href="projects.html" class="active">Projects</a></li>
-                <li><a href="lore.html">Lore</a></li>
-                <li><a href="certifications.html">Certifications</a></li>
-                <li><a href="content.html">Content</a></li>
-                <li><a href="resume.html">Resume</a></li>
-                <li><a href="contact.html">Contact</a></li>
+        </header>
+
+        <main>
+            <div class="page-head">
+                <h1>Projects</h1>
+                <p>
+                    Systems and tools, mostly built to answer a mathematical question.
+                    Each has a small working model beside it.
+                </p>
+            </div>
+
+            <article class="entry t-ai" id="aideas">
+                <div>
+                    <span class="status">Capstone · 90/100</span><span class="kicker">Jan – May 2026 · Python, LLMs</span>
+                    <h3>AIDEAS-OEIS — AI-Driven Evaluation of Arithmetic Sequences in OEIS</h3>
+                    <p>
+                        A hybrid verifier that reads OEIS entries and flags formulas that
+                        don't hold. Qwen2.5-Math:7b runs locally through Ollama, and SymPy
+                        and LODA program synthesis check what it produces.
+                    </p>
+                    <ul>
+                        <li>Three verifiers: LODA (≈19% hit rate) → LLM writes the formula as code, run in a restricted Python sandbox → SymPy closed-form evaluation; a Bayesian classifier combines them into one confidence score.</li>
+                        <li>2,041 sequences: <strong>51.6%</strong> high-confidence valid, 40.3% need human review, 8.1% LLM interpretation errors — stable under Wilson 95% intervals.</li>
+                        <li>Survives crashes and resumes (SQLite state per sequence), runs in Docker, exports CSV/JSON/SQLite.</li>
+                    </ul>
+                    <div class="actions">
+                        <a class="btn" href="https://github.com/AST12212224/AIDEAS-OEIS">Code</a>
+                    </div>
+                </div>
+                <figure class="fig" data-fig="aideas">
+                    <canvas aria-label="Sequences flowing through the three-verifier pipeline"></canvas>
+                    <figcaption>
+                        <b>Pipeline.</b> 2,041 sequences pass through the three verifiers
+                        and settle into the reported proportions. Black whiskers are Wilson
+                        95% intervals; they narrow as the sample grows.
+                    </figcaption>
+                </figure>
+            </article>
+
+            <article class="entry t-oeis" id="oeis">
+                <div>
+                    <span class="status">Ongoing</span><span class="kicker">Integer-sequence research</span>
+                    <h3>OEIS contributor</h3>
+                    <p>
+                        Contributions to the On-Line Encyclopedia of Integer Sequences.
+                        The common thread is the finite difference — the same operator
+                        behind the <a href="research.html#layers">Layered Pascal</a> work.
+                    </p>
+                    <ul>
+                        <li>Closed-form formula for <a href="https://oeis.org/A259569">A259569</a>, later shown to be a layer-2 projection of my Pascal transform framework.</li>
+                        <li>Corrected mathematical errors in <a href="https://oeis.org/A130823">A130823</a>.</li>
+                        <li>Active on the <a href="https://oeis.org/wiki/User:Aadesh">OEIS Wiki</a>.</li>
+                    </ul>
+                    <div class="actions">
+                        <a class="btn" href="https://oeis.org/wiki/User:Aadesh">OEIS profile</a>
+                    </div>
+                </div>
+                <figure class="fig" data-fig="diff">
+                    <canvas aria-label="Finite difference table of n to the p"></canvas>
+                    <figcaption>
+                        <b>Difference table.</b> Take differences of <i>n<sup>p</sup></i> repeatedly: after
+                        <i>p</i> rounds every row is the constant <i>p</i>!, and after that, zero.
+                    </figcaption>
+                </figure>
+            </article>
+
+            <article class="entry t-manim" id="manim">
+                <div>
+                    <span class="status">Ongoing</span><span class="kicker">Python (Manim), C++</span>
+                    <h3>Manim animations for research presentations</h3>
+                    <p>
+                        More than ten Manim animations of new mathematical ideas — Fibonacci
+                        methods, probability distributions — used in my research talk on
+                        YouTube (500+ views).
+                    </p>
+                    <div class="actions">
+                        <a class="btn" href="https://youtu.be/Vwe1ojJnU_A">Watch</a>
+                        <a class="btn" href="https://github.com/AST12212224/Manim-codes-for-my-maths-research-presentation">Code</a>
+                    </div>
+                </div>
+                <figure class="fig" data-fig="epicycles">
+                    <canvas aria-label="Fourier epicycles drawing a square wave"></canvas>
+                    <figcaption>
+                        <b>In the Manim spirit.</b> Rotating circles add odd harmonics into a
+                        square wave. Add circles and the corners get sharper (the overshoot
+                        that stays is the Gibbs phenomenon).
+                    </figcaption>
+                </figure>
+            </article>
+
+            <article class="entry t-agro" id="agro">
+                <div>
+                    <span class="status">Client project</span><span class="kicker">2021 – 2022 · Django</span>
+                    <h3>Django-POL Agro web platform</h3>
+                    <p>
+                        A full-stack Django CRUD platform built for a client during the IB
+                        Diploma. Fertiliser wholesalers use it to answer farmers' questions
+                        and show their products.
+                    </p>
+                    <div class="actions">
+                        <a class="btn" href="https://github.com/AST12212224/Django-POL_Agro">Code</a>
+                    </div>
+                </div>
+                <figure class="fig" data-fig="agro">
+                    <canvas aria-label="Queries flowing between farmers and wholesalers"></canvas>
+                    <figcaption>
+                        <b>Request flow.</b> Farmers send queries
+                        (<span style="color: var(--c3)">amber</span>) and wholesalers reply
+                        (<span style="color: var(--c)">green</span>). Click a farmer to ask
+                        something.
+                    </figcaption>
+                </figure>
+            </article>
+
+            <article class="entry t-oeis" id="mybash">
+                <div>
+                    <span class="status">Ongoing</span><span class="kicker">Shell</span>
+                    <h3>myBash — Bash &amp; Linux commands</h3>
+                    <p>
+                        My collection of useful Bash commands, Linux one-liners and
+                        <code>.bashrc</code> customisations, including a cron job that
+                        updates Homebrew every month. Notes from tutorials and practice.
+                    </p>
+                    <div class="actions">
+                        <a class="btn" href="https://github.com/AST12212224/myBash">Code</a>
+                    </div>
+                </div>
+                <figure class="fig" data-fig="bash">
+                    <div class="term" role="log" aria-label="Interactive terminal"></div>
+                    <figcaption>
+                        <b>Try it.</b> A tiny shell — <code>ls</code>,
+                        <code>cat c2.txt</code>, <code>primes 100</code>,
+                        <code>crontab -l</code>.
+                    </figcaption>
+                </figure>
+            </article>
+
+            <h2>More on GitHub</h2>
+            <ul class="news">
+                <li><time>Image</time><span><a href="https://github.com/AST12212224/DIP_RP_PR">DIP_RP_PR</a> — turns one image into another by reordering its pixels by grayscale rank.</span></li>
+                <li><time>Web</time><span><a href="https://github.com/AST12212224/classsync">ClassSync</a> — real-time timetable and classroom allocation.</span></li>
+                <li><time>LaTeX</time><span><a href="https://github.com/AST12212224/autocoltable">autocoltable</a> — an extension that simplifies tables in LaTeX.</span></li>
+                <li><time>ML</time><span><a href="https://github.com/AST12212224/ml-specialization-implementations">ml-specialization-implementations</a> — notes and code from Andrew Ng's ML Specialization.</span></li>
+                <li><time>All</time><span><a href="https://github.com/AST12212224?tab=repositories">github.com/AST12212224</a></span></li>
             </ul>
-        </nav>
+        </main>
 
-        <div class="page-title">
-            <h1>Projects</h1>
-            <p>
-                Coding projects, open-source contributions, and practical
-                applications
-            </p>
-        </div>
-
-        <section>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <span class="research-tag">Open Source</span>
-                    <h3 class="research-title">
-                        Manim Codes for Math Research
-                    </h3>
-                    <p class="research-desc">
-                        Built 10+ Manim animations to visualize novel
-                        mathematical concepts including Fibonacci methods,
-                        probability distributions, and number theory patterns.
-                        Garnered 500+ views on YouTube.
-                    </p>
-                    <div style="margin: 1.5rem 0">
-                        <p class="research-desc">
-                            <strong>Technologies:</strong> Python, Manim, C++<br />
-                            <strong>Features:</strong><br />
-                            • Mathematical animation framework<br />
-                            • Visual representations of research concepts<br />
-                            • Educational content creation<br />
-                            • Integration with research presentations
-                        </p>
-                    </div>
-                    <div class="research-meta">
-                        <p><strong>Status:</strong> Ongoing</p>
-                        <p>
-                            <strong>Links:</strong>
-                            <a
-                                href="https://youtube.com"
-                                target="_blank"
-                                style="color: var(--accent)"
-                                >YouTube</a
-                            >
-                            |
-                            <a
-                                href="https://github.com"
-                                target="_blank"
-                                style="color: var(--accent)"
-                                >GitHub Repository</a
-                            >
-                        </p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <span class="research-tag">Shell Scripting</span>
-                    <h3 class="research-title">
-                        myBash - Bash & Linux Repository
-                    </h3>
-                    <p class="research-desc">
-                        A comprehensive collection of useful Bash commands,
-                        Linux one-liners, and .bashrc customizations. Includes
-                        automation scripts and productivity tools for Unix-based
-                        systems.
-                    </p>
-                    <div style="margin: 1.5rem 0">
-                        <p class="research-desc">
-                            <strong>Technologies:</strong> Bash, Shell
-                            Scripting, Cron<br />
-                            <strong>Features:</strong><br />
-                            • Cron job for auto-updating Homebrew monthly<br />
-                            • Personal notes and tutorial summaries<br />
-                            • Command aliases and shortcuts<br />
-                            • System automation scripts
-                        </p>
-                    </div>
-                    <div class="research-meta">
-                        <p><strong>Status:</strong> Ongoing</p>
-                        <p>
-                            <strong>Links:</strong>
-                            <a
-                                href="https://github.com"
-                                target="_blank"
-                                style="color: var(--accent)"
-                                >GitHub Repository</a
-                            >
-                        </p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <span class="research-tag">Full Stack</span>
-                    <h3 class="research-title">Django-POL Agro Web Platform</h3>
-                    <p class="research-desc">
-                        Built for a client during IB Diploma Programme.
-                        Developed a full-stack Django-based CRUD platform
-                        connecting fertilizer wholesalers with farmers to
-                        streamline queries and product access.
-                    </p>
-                    <div style="margin: 1.5rem 0">
-                        <p class="research-desc">
-                            <strong>Technologies:</strong> Python, Django, HTML,
-                            CSS<br />
-                            <strong>Features:</strong><br />
-                            • Complete CRUD operations<br />
-                            • User authentication and management<br />
-                            • Product catalog and search<br />
-                            • Query management system<br />
-                            • Responsive web design
-                        </p>
-                    </div>
-                    <div class="research-meta">
-                        <p><strong>Period:</strong> 2021 - 2022</p>
-                        <p>
-                            <strong>Status:</strong> Completed (Client Project)
-                        </p>
-                        <p>
-                            <strong>Links:</strong>
-                            <a
-                                href="https://github.com"
-                                target="_blank"
-                                style="color: var(--accent)"
-                                >GitHub Repository</a
-                            >
-                        </p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <span class="research-tag">C++ • Mathematical</span>
-                    <h3 class="research-title">
-                        Uncertainty-Stability Quotient Calculator
-                    </h3>
-                    <p class="research-desc">
-                        Implementation of the USQ power-ratio function with
-                        high-precision arithmetic. Demonstrates the transition
-                        from instability to asymptotic certainty in various
-                        mathematical systems.
-                    </p>
-                    <div style="margin: 1.5rem 0">
-                        <p class="research-desc">
-                            <strong>Technologies:</strong> C++, iomanip,
-                            gmpxx.h<br />
-                            <strong>Features:</strong><br />
-                            • High-precision calculations<br />
-                            • Visualization of convergence patterns<br />
-                            • Multiple application domains<br />
-                            • Performance optimization
-                        </p>
-                    </div>
-                    <div class="research-meta">
-                        <p><strong>Period:</strong> 2024 - 2025</p>
-                        <p>
-                            <strong>Links:</strong>
-                            <a
-                                href="https://medium.com"
-                                target="_blank"
-                                style="color: var(--accent)"
-                                >Medium Article</a
-                            >
-                            |
-                            <a
-                                href="https://github.com"
-                                target="_blank"
-                                style="color: var(--accent)"
-                                >GitHub</a
-                            >
-                        </p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <span class="research-tag">CUDA • GPU Computing</span>
-                    <h3 class="research-title">Pascal-Fibonacci CUDA Solver</h3>
-                    <p class="research-desc">
-                        GPU-accelerated implementation for finding Fibonacci
-                        numbers from Pascal triangle rows. Achieves exhaustive
-                        analysis of billions of combinations using CUDA parallel
-                        processing.
-                    </p>
-                    <div style="margin: 1.5rem 0">
-                        <p class="research-desc">
-                            <strong>Technologies:</strong> CUDA, C++, GPU
-                            Computing<br />
-                            <strong>Features:</strong><br />
-                            • Parallel algorithm implementation<br />
-                            • Analysis up to 3²² combinations<br />
-                            • Memory optimization techniques<br />
-                            • Performance benchmarking tools
-                        </p>
-                    </div>
-                    <div class="research-meta">
-                        <p><strong>Period:</strong> Feb 2025 - Present</p>
-                        <p>
-                            <strong>Links:</strong>
-                            <a
-                                href="https://github.com"
-                                target="_blank"
-                                style="color: var(--accent)"
-                                >GitHub Repository</a
-                            >
-                        </p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <span class="research-tag">Python • Data Science</span>
-                    <h3 class="research-title">DSRS Computation Engine</h3>
-                    <p class="research-desc">
-                        Computational framework for Discrete Square Residual
-                        Structures research. Performs large-scale numerical
-                        analysis and generates convergence visualizations.
-                    </p>
-                    <div style="margin: 1.5rem 0">
-                        <p class="research-desc">
-                            <strong>Technologies:</strong> Python, NumPy,
-                            Matplotlib, Pandas<br />
-                            <strong>Features:</strong><br />
-                            • Infinite product calculations<br />
-                            • Convergence analysis up to μ=70,000<br />
-                            • Data visualization and plotting<br />
-                            • Statistical validation tools
-                        </p>
-                    </div>
-                    <div class="research-meta">
-                        <p><strong>Period:</strong> June 2025 - Sept 2025</p>
-                        <p>
-                            <strong>Links:</strong>
-                            <a
-                                href="https://github.com"
-                                target="_blank"
-                                style="color: var(--accent)"
-                                >GitHub Repository</a
-                            >
-                        </p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <span class="research-tag">Educational</span>
-                    <h3 class="research-title">
-                        Fibonacci Computation Analysis Suite
-                    </h3>
-                    <p class="research-desc">
-                        Comprehensive comparison of different Fibonacci
-                        computation methods including Lucas's Pascal Triangle
-                        approach, dynamic programming, and matrix
-                        exponentiation.
-                    </p>
-                    <div style="margin: 1.5rem 0">
-                        <p class="research-desc">
-                            <strong>Technologies:</strong> Python, C++, Jupyter
-                            Notebook<br />
-                            <strong>Features:</strong><br />
-                            • Multiple algorithm implementations<br />
-                            • Performance benchmarking<br />
-                            • Complexity analysis<br />
-                            • Educational documentation
-                        </p>
-                    </div>
-                    <div class="research-meta">
-                        <p><strong>Period:</strong> Dec 2024 - Apr 2025</p>
-                        <p>
-                            <strong>Links:</strong>
-                            <a
-                                href="https://github.com"
-                                target="_blank"
-                                style="color: var(--accent)"
-                                >GitHub Repository</a
-                            >
-                        </p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <span class="research-tag">Web Development</span>
-                    <h3 class="research-title">Personal Portfolio Website</h3>
-                    <p class="research-desc">
-                        Modern, minimalist portfolio website inspired by
-                        Nothing's design philosophy. Built with vanilla HTML,
-                        CSS, and JavaScript for optimal performance.
-                    </p>
-                    <div style="margin: 1.5rem 0">
-                        <p class="research-desc">
-                            <strong>Technologies:</strong> HTML, CSS,
-                            JavaScript<br />
-                            <strong>Features:</strong><br />
-                            • Nothing-inspired dot matrix design<br />
-                            • Smooth animations and transitions<br />
-                            • Fully responsive layout<br />
-                            • Custom domain integration
-                        </p>
-                    </div>
-                    <div class="research-meta">
-                        <p><strong>Status:</strong> Live</p>
-                        <p>
-                            <strong>Links:</strong>
-                            <a
-                                href="https://aadesh24.com"
-                                target="_blank"
-                                style="color: var(--accent)"
-                                >Live Site</a
-                            >
-                            |
-                            <a
-                                href="https://github.com"
-                                target="_blank"
-                                style="color: var(--accent)"
-                                >GitHub</a
-                            >
-                        </p>
-                    </div>
-                </div>
+        <footer class="site-footer">
+            <div class="inner">
+                <span>© 2026 Aadesh Tikhe · <a href="mailto:aadeshtikhe24@gmail.com">aadeshtikhe24@gmail.com</a></span>
+                <span>Last updated October 2026</span>
             </div>
-        </section>
-
-        <script src="script.js"></script>
+        </footer>
+        <script src="figures.js"></script>
     </body>
 </html>
