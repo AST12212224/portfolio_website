@@ -30,9 +30,35 @@
             document.dispatchEvent(new Event("themechange"));
         });
 
-        const page = location.pathname.split("/").pop() || "index.html";
+        const page = "/" + location.pathname.split("/").pop().replace(/\.html$/, "").replace(/^index$/, "");
         document.querySelectorAll(".site-nav a").forEach((a) => {
             if (a.getAttribute("href") === page) a.setAttribute("aria-current", "page");
         });
+
+        // Same-page section links: scroll without putting "#id" in the address bar.
+        document.addEventListener("click", (e) => {
+            const a = e.target.closest("a[href]");
+            if (!a || e.metaKey || e.ctrlKey || e.shiftKey || a.target === "_blank") return;
+            const url = new URL(a.href, location.href);
+            if (!url.hash || url.origin !== location.origin) return;
+            const here = (p) => p.replace(/(index)?(\.html)?$/, "");
+            if (here(url.pathname) !== here(location.pathname)) return;
+            const el = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+            if (!el) return;
+            e.preventDefault();
+            el.scrollIntoView({ behavior: "smooth" });
+        });
+    });
+
+    // Keep the address bar clean: "/research.html#c2" shows as "/research".
+    // Runs after load so the browser has already jumped to the section.
+    window.addEventListener("load", () => {
+        if (location.protocol === "file:") return;
+        const id = decodeURIComponent(location.hash.slice(1));
+        const clean = location.pathname.replace(/(index)?\.html$/, "") + location.search;
+        if (clean === location.pathname + location.search && !id) return;
+        const el = id && document.getElementById(id);
+        history.replaceState(null, "", clean);
+        if (el) requestAnimationFrame(() => el.scrollIntoView());
     });
 })();
